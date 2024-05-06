@@ -1,0 +1,22 @@
+.newlevels-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 15%;
+  padding-right: 15%;
+  background-color: black;
+  color: white;
+}
+
+.nav-list a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.nav-list a i {
+  margin-right: 10px;
+}

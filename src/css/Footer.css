@@ -1,0 +1,45 @@
+.footer {
+  padding: 3% 15%;
+  background-color: black;
+  color: white;
+}
+
+.footer-main {
+  display: grid;
+  grid-template-columns: 30% 20% 20% 20%;
+  justify-content: space-between;
+}
+
+.footer li {
+  list-style-type: none;
+}
+
+.footer ul {
+  padding: 0px;
+}
+
+.footer li {
+  line-height: 3;
+}
+
+.footer .contact-link {
+  display: flex;
+  align-items: center;
+}
+
+.footer .contact-link i {
+  padding-right: 10px;
+}
+
+.footer .footer-description p {
+  line-height: 2;
+}
+
+.rights {
+  border-top: 1px solid white;
+  text-align: center;
+}
+
+.rights p span {
+  font-weight: bold;
+}
