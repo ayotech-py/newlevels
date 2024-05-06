@@ -1,4 +1,4 @@
-.home {
+main {
   margin-bottom: 2%;
   margin-top: 4%;
 }
@@ -55,7 +55,7 @@
 }
 
 @media screen and (max-width: 650px) {
-  .home {
+  main {
     margin-top: 18%;
   }
 
