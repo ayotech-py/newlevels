@@ -1,5 +1,6 @@
 .home {
   margin-bottom: 2%;
+  margin-top: 4%;
 }
 
 .category-list {
@@ -51,4 +52,33 @@
   font-size: 0.9rem;
   border-radius: 5px;
   border: 1px solid black;
+}
+
+@media screen and (max-width: 650px) {
+  .home {
+    margin-top: 18%;
+  }
+
+  .category-list ul li {
+    padding: 5px 6px;
+    font-size: 0.7rem;
+  }
+
+  .search input {
+    width: 80%;
+    padding: 8px;
+    font-size: 0.8rem;
+    border-radius: 5px;
+  }
+
+  .search {
+    margin-bottom: 5%;
+  }
+
+  .product-list {
+    margin-left: 5%;
+    margin-right: 5%;
+    grid-template-columns: 48% 48%;
+    justify-content: space-between;
+  }
 }

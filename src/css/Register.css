@@ -1,15 +1,17 @@
 .form-card {
-  top: 50%;
-  left: 40%;
-  transform: translate(-40%, -50%);
-  position: absolute;
+  display: flex;
+  justify-content: center; /* Horizontally center the container */
+  align-items: center; /* Vertically center the container */
+  height: 100vh;
 }
 
 .auth-form {
   border-radius: 10px;
   box-shadow: 5px 5px 5px 5px rgba(0, 0, 0, 0.1);
   padding: 30px;
-  width: 150%;
+  margin-left: 30%;
+  margin-right: 30%;
+  width: 40%;
 }
 
 .input-fields {
@@ -55,4 +57,17 @@
   text-decoration: none;
   font-size: 0.9rem;
   color: black;
+}
+
+@media screen and (max-width: 650px) {
+  .auth-form {
+    margin-left: 5%;
+    margin-right: 5%;
+    width: 90%;
+    padding: 15px;
+  }
+
+  .form-actions a {
+    font-size: 0.7rem;
+  }
 }

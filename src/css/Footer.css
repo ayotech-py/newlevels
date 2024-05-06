@@ -43,3 +43,23 @@
 .rights p span {
   font-weight: bold;
 }
+
+@media screen and (max-width: 650px) {
+  .footer {
+    padding: 3% 5%;
+    text-align: center;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 100%;
+  }
+
+  .footer .contact-link {
+    justify-content: center;
+  }
+
+  .footer .footer-description p {
+    line-height: 1.5;
+  }
+}

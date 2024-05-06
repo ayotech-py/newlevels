@@ -17,8 +17,10 @@ const Home = () => {
     <main className="home">
       <section className="category-list">
         <ul>
-          {categories.map((category) => (
-            <li>{category}</li>
+          {categories.map((category, index) => (
+            <li className={index === 0 ? "selected-category" : ""}>
+              {category}
+            </li>
           ))}
         </ul>
       </section>
@@ -26,6 +28,11 @@ const Home = () => {
         <input type="text" placeholder="Search" />
       </section>
       <section className="product-list">
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
+        <ProductCard />
         <ProductCard />
         <ProductCard />
         <ProductCard />
