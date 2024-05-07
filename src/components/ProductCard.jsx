@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const ProductCard = () => {
   return (
@@ -11,14 +12,23 @@ const ProductCard = () => {
         />
       </div>
       <div className="description">
+        <div className="seller-badge">
+          <img
+            src="https://dynamic.brandcrowd.com/asset/logo/937e0eec-eebf-4294-9029-41619d6c3786/logo-search-grid-1x?logoTemplateVersion=1&v=638369310055500000"
+            alt=""
+            srcset=""
+          />
+          <p>Comely Store</p>
+        </div>
         <h3>Cargo Pant</h3>
-        <p>Comely Store</p>
         <div className="location">
           <i class="fa-solid fa-location-dot"></i>
-          <p>Abuja</p>
+          <p>Newhall, Unilag</p>
         </div>
         <h3>₦19,500</h3>
-        <button>Details</button>
+        <Link to={"/product/48u4r8uj4r7yt6t3g8i3e7y"}>
+          <button>Details</button>
+        </Link>
       </div>
     </div>
   );

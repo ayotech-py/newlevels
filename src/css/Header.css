@@ -12,6 +12,11 @@
   left: 0;
 }
 
+.brand-name a {
+  text-decoration: none;
+  color: white;
+}
+
 .nav-list a {
   display: flex;
   justify-content: center;

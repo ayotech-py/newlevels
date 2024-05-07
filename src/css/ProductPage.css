@@ -87,6 +87,11 @@
   font-weight: 600;
 }
 
+.product-description .location {
+  margin-top: 20px;
+  color: gray;
+}
+
 @media screen and (max-width: 650px) {
   .product-page {
     margin-left: 5%;

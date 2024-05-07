@@ -31,3 +31,7 @@ code {
 .x-large-size {
   font-size: 35px;
 }
+
+button {
+  cursor: pointer;
+}

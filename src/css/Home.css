@@ -41,6 +41,11 @@ main {
   justify-content: space-between;
 }
 
+.product-list a {
+  text-decoration: none;
+  color: black;
+}
+
 .search {
   text-align: center;
   margin-bottom: 1%;
@@ -52,6 +57,11 @@ main {
   font-size: 0.9rem;
   border-radius: 5px;
   border: 1px solid black;
+}
+
+.similar-product h2 {
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 @media screen and (max-width: 650px) {
@@ -80,5 +90,10 @@ main {
     margin-right: 5%;
     grid-template-columns: 48% 48%;
     justify-content: space-between;
+  }
+
+  .similar-product h2 {
+    margin-left: 5%;
+    margin-right: 5%;
   }
 }
