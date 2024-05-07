@@ -36,6 +36,11 @@ button {
   cursor: pointer;
 }
 
+footer {
+  position: relative;
+  z-index: -1000;
+}
+
 @media screen and (max-width: 650px) {
   .small-size {
     font-size: 10px;

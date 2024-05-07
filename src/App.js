@@ -8,11 +8,13 @@ import "../src/css/ProductCard.css";
 import "../src/css/Footer.css";
 import "../src/css/Register.css";
 import "../src/css/ProductPage.css";
+import "../src/css/Ads.css";
 
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import Ads from "./pages/Ads";
 
 const App = () => {
   return (
@@ -29,6 +31,7 @@ const App = () => {
             element={<Layout children={<ProductPage />} />}
           />
         </Route>
+        <Route path="/ads" element={<Layout children={<Ads />} />} />
       </Routes>
     </BrowserRouter>
   );

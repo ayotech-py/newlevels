@@ -73,6 +73,15 @@
   margin-right: 5px;
 }
 
+.ads-action-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.ads-action-btn a {
+  width: 48%;
+}
+
 @media screen and (max-width: 650px) {
   .product-card .image {
     width: 100%;
