@@ -18,16 +18,16 @@ const ProductCard = () => {
             alt=""
             srcset=""
           />
-          <p>Comely Store</p>
+          <p className="medium-size">Comely Store</p>
         </div>
-        <h3>Cargo Pant</h3>
-        <div className="location">
+        <h3 className="medium-size">Cargo Pant</h3>
+        <div className="location medium-size">
           <i class="fa-solid fa-location-dot"></i>
           <p>Newhall, Unilag</p>
         </div>
-        <h3>₦19,500</h3>
+        <h3 className="medium-size">₦19,500</h3>
         <Link to={"/product/48u4r8uj4r7yt6t3g8i3e7y"}>
-          <button>Details</button>
+          <button className="medium-size">Details</button>
         </Link>
       </div>
     </div>
