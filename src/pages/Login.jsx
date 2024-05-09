@@ -1,12 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../components/AuthProvider";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
   function toTitleCase(str) {
     return str.toLowerCase().replace(/(?:^|\s|-)\w/g, function (match) {
@@ -50,10 +55,8 @@ const Login = () => {
     setMessage(response.message);
     setLoading(false);
     if (request.status === 200) {
-      window.localStorage.setItem("access", response.access);
-      window.localStorage.setItem("refresh", response.refresh);
-      window.localStorage.setItem("username", response.username);
-      window.location.href = "/";
+      login(response.userData, response.tokens);
+      navigate("/", { replace: true });
     }
   };
 

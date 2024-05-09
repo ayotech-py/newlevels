@@ -1,37 +1,54 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const AdsProductCard = () => {
+const AdsProductCard = ({ product }) => {
+  const handleDelete = async (product_id) => {
+    const token = window.localStorage.getItem("accessToken");
+    const username = window.localStorage.getItem("username");
+
+    const url = `${process.env.REACT_APP_BASE_URL}/products/${product_id}`;
+
+    const request = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        user: username,
+      },
+    });
+
+    const response = await request.json();
+    console.log(response);
+  };
   return (
     <div className="product-card">
       <div className="image">
-        <img
-          src="https://res.cloudinary.com/djqqqetjx/image/upload/v1704142114/b8njgovxlecyzvqgtiae.jpg"
-          alt=""
-          srcset=""
-        />
+        <img src={product.image} alt="" srcset="" />
       </div>
       <div className="description">
         <div className="seller-badge">
-          <img
-            src="https://dynamic.brandcrowd.com/asset/logo/937e0eec-eebf-4294-9029-41619d6c3786/logo-search-grid-1x?logoTemplateVersion=1&v=638369310055500000"
-            alt=""
-            srcset=""
-          />
+          <img src={product.customer.profile_image} alt="" srcset="" />
           <p className="medium-size">Comely Store</p>
         </div>
-        <h3 className="medium-size">Cargo Pant</h3>
+        <h3 className="medium-size">{product.title}</h3>
         <div className="location medium-size">
           <i class="fa-solid fa-location-dot"></i>
-          <p>Newhall, Unilag</p>
+          <p>{product.customer.location}</p>
         </div>
-        <h3 className="medium-size">₦19,500</h3>
+        <h3 className="medium-size">
+          ₦{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+        </h3>
         <div className="ads-action-btn">
-          <Link to={"/product/48u4r8uj4r7yt6t3g8i3e7y"}>
+          <Link to={""}>
             <button className="medium-size">Edit</button>
           </Link>
-          <Link to={"/product/48u4r8uj4r7yt6t3g8i3e7y"}>
-            <button className="medium-size">Delete</button>
+          <Link to={""}>
+            <button
+              onClick={() => handleDelete(product.id)}
+              className="medium-size"
+            >
+              Delete
+            </button>
           </Link>
         </div>
       </div>

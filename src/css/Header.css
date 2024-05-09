@@ -17,6 +17,11 @@
   color: white;
 }
 
+.nav-list {
+  display: flex;
+  align-items: center;
+}
+
 .nav-list a {
   display: flex;
   justify-content: center;
@@ -24,9 +29,28 @@
   color: white;
   text-decoration: none;
   font-weight: bold;
+  margin-left: 20px;
+  transition: 0.3s ease-in-out;
+}
+
+.nav-list a:hover {
+  color: gray;
 }
 
 .nav-list a i {
+  margin-right: 10px;
+}
+
+.db-profile {
+  display: flex;
+  align-items: center;
+}
+
+.db-profile img {
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border-radius: 50%;
   margin-right: 10px;
 }
 

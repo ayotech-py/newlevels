@@ -8,6 +8,7 @@
 
 .product-page .product-image {
   width: 50%;
+  max-height: 500px;
 }
 
 .product-page .product-description {

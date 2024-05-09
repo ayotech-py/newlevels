@@ -1,21 +1,14 @@
 import React from "react";
 import ProductCard from "./ProductCard";
 
-const SimilarProduct = () => {
+const SimilarProduct = ({ similarProduct }) => {
   return (
     <div className="similar-product">
       <h2>Similar Products</h2>
       <section className="product-list">
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
-        <ProductCard />
+        {similarProduct.map((product) => (
+          <ProductCard product={product} />
+        ))}
       </section>
     </div>
   );

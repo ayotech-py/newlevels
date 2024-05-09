@@ -1,9 +1,77 @@
 import React, { useState } from "react";
 import AdsProductCard from "../components/AdsProductCard";
+import { useAuth } from "../components/AuthProvider";
+import Loading from "../components/Loading";
 
 const Ads = () => {
-  const [profileImage, setProfileImage] = useState(null);
+  const [productImage, setProductImage] = useState(null);
   const [formState, setFormState] = useState(false);
+  const { user } = useAuth();
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [category, setCategory] = useState("");
+
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  function toTitleCase(str) {
+    return str.toLowerCase().replace(/(?:^|\s|-)\w/g, function (match) {
+      return match.toUpperCase();
+    });
+  }
+
+  const handleCreate = async () => {
+    setLoading(true);
+    const token = window.localStorage.getItem("accessToken");
+    const username = window.localStorage.getItem("username");
+
+    const isNullOrEmpty = (value) =>
+      value === null || value === undefined || value === "";
+
+    const body = {
+      title: name,
+      description: description,
+      price: price,
+      category: category,
+      image: productImage,
+    };
+
+    for (const key in body) {
+      if (body.hasOwnProperty(key) && isNullOrEmpty(body[key])) {
+        setMessage(
+          `${toTitleCase(key.replaceAll("_", " "))} cannot be blank or empty`,
+        );
+        setLoading(false);
+        return null;
+      }
+    }
+
+    const url = `${process.env.REACT_APP_BASE_URL}/products/`;
+
+    const request = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        user: username,
+      },
+      body: JSON.stringify(body),
+    });
+
+    const response = await request.json();
+    console.log(response);
+    setMessage(response.message);
+    setLoading(false);
+    if (request.status === 200) {
+      setName("");
+      setDescription("");
+      setPrice("");
+      setCategory("");
+      setProductImage(null);
+    }
+  };
 
   const categories = [
     "Bags",
@@ -37,6 +105,12 @@ const Ads = () => {
         style={{ display: formState ? "block" : "none" }}
       >
         <h2>Add Product</h2>
+        <div
+          className="response-message"
+          style={{ display: message.length > 0 ? "block" : "none" }}
+        >
+          <p className="medium-size">{message}</p>
+        </div>
         <div className="image-div">
           <div className="image-upload">
             <input
@@ -44,7 +118,7 @@ const Ads = () => {
               type="file"
               accept="image/*"
               className="hidden"
-              onChange={handleImageChange(setProfileImage)}
+              onChange={handleImageChange(setProductImage)}
             />
             <label
               htmlFor="imageUpload"
@@ -57,10 +131,10 @@ const Ads = () => {
                 backgroundColor: "white",
               }}
             >
-              {profileImage ? (
+              {productImage ? (
                 <img
                   id="uploadedImage"
-                  src={profileImage}
+                  src={productImage}
                   alt="Uploaded"
                   style={{
                     display: "block",
@@ -75,12 +149,32 @@ const Ads = () => {
           </div>
         </div>
         <div className="input-fields">
-          <input type="text" placeholder="Product Name" />
-          <textarea type="text" placeholder="Product Description" />
-          <input type="number" placeholder="Price" />
-          <select id="options" placeholder="Select Cateogory">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="Product Name"
+          />
+          <textarea
+            type="text"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Product Description"
+          />
+          <input
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            placeholder="Price"
+          />
+          <select
+            id="options"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            placeholder="Select Cateogory"
+          >
             <option value="" disabled>
-              Select Cateogory...
+              Select Category...
             </option>
             {categories.map((category) => (
               <option value={category}>{category}</option>
@@ -88,7 +182,9 @@ const Ads = () => {
           </select>
         </div>
         <div className="ads-form-btn">
-          <button className="medium-size save">Save</button>
+          <button className="medium-size save" onClick={handleCreate}>
+            {loading ? <Loading /> : "Post"}
+          </button>
           <button className="medium-size" onClick={() => setFormState(false)}>
             Cancel
           </button>
@@ -100,16 +196,9 @@ const Ads = () => {
         </button>
       </section>
       <section className="product-list">
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
-        <AdsProductCard />
+        {user.product.map((product) => (
+          <AdsProductCard product={product} />
+        ))}
       </section>
     </div>
   );
