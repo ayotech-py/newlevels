@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useAuth } from "../components/AuthProvider";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
+import compressImage from "../components/ImageCompressor";
 
 const Ads = () => {
   const [productImage, setProductImage] = useState(null);
@@ -187,8 +188,10 @@ const Ads = () => {
     "Misc",
   ];
 
-  const handleImageChange = (setImage) => (event) => {
-    const file = event.target.files[0];
+  const handleImageChange = (setImage) => async (event) => {
+    let file = event.target.files[0];
+    file = await compressImage(file);
+    console.log(file);
     if (file) {
       const reader = new FileReader();
 

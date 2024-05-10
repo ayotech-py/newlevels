@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Loading from "../components/Loading";
 import { useAuth } from "../components/AuthProvider";
+import compressImage from "../components/ImageCompressor";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -22,8 +23,10 @@ const Profile = () => {
     });
   }
 
-  const handleImageChange = (setImage) => (event) => {
-    const file = event.target.files[0];
+  const handleImageChange = (setImage) => async (event) => {
+    let file = event.target.files[0];
+    file = await compressImage(file);
+    console.log(file);
     if (file) {
       const reader = new FileReader();
 
