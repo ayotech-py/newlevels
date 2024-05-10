@@ -55,7 +55,7 @@ const Login = () => {
     setMessage(response.message);
     setLoading(false);
     if (request.status === 200) {
-      login(response.userData, response.tokens);
+      login(response.userData, response.tokens, response.username);
       navigate("/", { replace: true });
     }
   };

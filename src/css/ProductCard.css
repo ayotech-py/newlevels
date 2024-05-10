@@ -2,6 +2,7 @@
   border-radius: 10px;
   box-shadow: 0 4px 7px rgba(0, 0, 0, 0.2);
   margin-bottom: 15%;
+  height: max-content;
 }
 
 .product-card .image {
@@ -71,6 +72,10 @@
   object-fit: cover;
   border-radius: 50%;
   margin-right: 5px;
+}
+
+.product-card .description .medium-size-h3 {
+  line-height: 20px;
 }
 
 .ads-action-btn {

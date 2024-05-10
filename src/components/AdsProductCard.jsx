@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "./AuthProvider";
 
 const AdsProductCard = ({ product }) => {
+  const { user, updateUser } = useAuth();
+
   const handleDelete = async (product_id) => {
     const token = window.localStorage.getItem("accessToken");
     const username = window.localStorage.getItem("username");
@@ -17,8 +20,22 @@ const AdsProductCard = ({ product }) => {
       },
     });
 
-    const response = await request.json();
-    console.log(response);
+    if (request.ok) {
+      let indexToDelete = user.product.findIndex(
+        (obj) => obj.id === product_id,
+      );
+
+      if (indexToDelete !== -1) {
+        user.product.splice(indexToDelete, 1);
+        updateUser(user);
+        alert("Product deleted successfully!");
+        window.location.href = "/ads";
+      } else {
+        console.log("Object with the specified ID not found.");
+      }
+    } else {
+      alert("An error occured!");
+    }
   };
   return (
     <div className="product-card">
@@ -38,6 +55,7 @@ const AdsProductCard = ({ product }) => {
         <h3 className="medium-size">
           ₦{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
         </h3>
+
         <div className="ads-action-btn">
           <Link to={""}>
             <button className="medium-size">Edit</button>

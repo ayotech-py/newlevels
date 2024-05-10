@@ -120,3 +120,18 @@
   border-radius: 5px;
   font-weight: bold;
 }
+
+@media screen and (max-width: 650px) {
+  .create_ad button {
+    width: 70%;
+  }
+
+  .create_ad {
+    margin-top: 100px;
+    margin-bottom: 25px;
+  }
+
+  .ads-container .ads-form {
+    width: 80%;
+  }
+}

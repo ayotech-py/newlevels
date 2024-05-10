@@ -9,38 +9,20 @@ import "../src/css/Footer.css";
 import "../src/css/Register.css";
 import "../src/css/ProductPage.css";
 import "../src/css/Ads.css";
+import "../src/css/Profile.css";
 
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Ads from "./pages/Ads";
+import Profile from "./pages/Profile";
 
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 const App = () => {
-  /*   const [user, setUser] = useState(null);
-   */ const [products, setProducts] = useState([]);
-
-  /* const getUser = async () => {
-    const token = window.localStorage.getItem("access");
-    const username = window.localStorage.getItem("username");
-
-    const url = `${process.env.REACT_APP_BASE_URL}/get-customer-data/`;
-
-    const response = await fetch(url, {
-      headers: {
-        Authorization: "Bearer " + token,
-        user: username,
-        "Content-Type": "application/json",
-      },
-    });
-    if (response.ok) {
-      const data = await response.json();
-      setUser(data);
-    }
-  }; */
+  const [products, setProducts] = useState([]);
 
   const getProduct = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/products/`;
@@ -59,8 +41,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    /*     getUser();
-     */ getProduct();
+    getProduct();
   }, []);
 
   return (
@@ -102,6 +83,18 @@ const App = () => {
                 children={
                   <ProtectedRoute>
                     <Ads />
+                  </ProtectedRoute>
+                }
+              />
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <Layout
+                children={
+                  <ProtectedRoute>
+                    <Profile />
                   </ProtectedRoute>
                 }
               />
