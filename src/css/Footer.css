@@ -4,6 +4,14 @@
   color: white;
 }
 
+.footer h3 {
+  color: #fff987;
+}
+
+.footer-description img {
+  width: 150px;
+}
+
 .footer-main {
   display: grid;
   grid-template-columns: 30% 20% 20% 20%;
@@ -38,6 +46,7 @@
 .rights {
   border-top: 1px solid white;
   text-align: center;
+  color: #fff987;
 }
 
 .rights p span {
@@ -46,7 +55,7 @@
 
 @media screen and (max-width: 650px) {
   .footer {
-    padding: 3% 5%;
+    padding: 7% 5%;
     text-align: center;
   }
 

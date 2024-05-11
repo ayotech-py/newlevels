@@ -1,11 +1,12 @@
 import React from "react";
+import logo from "../images/logo.jpeg";
 
 const Footer = () => {
   return (
     <div className="footer">
       <div className="footer-main">
         <div className="footer-description">
-          <h3>NEWLEVELS</h3>
+          <img src={logo} alt="" />
           <p>
             Experience the convenience of online shopping with our reliable and
             efficient delivery services.

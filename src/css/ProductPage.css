@@ -59,7 +59,7 @@
   text-align: center;
   width: 100%;
   background-color: black;
-  color: white;
+  color: var(--yellow);
   font-size: 1rem;
   font-weight: bold;
   padding: 10px;
@@ -91,6 +91,24 @@
 .product-description .location {
   margin-top: 20px;
   color: gray;
+}
+
+.product-page .product-image {
+  position: relative;
+}
+
+.product-image .featured {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  background-color: #fff987;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 15px;
+}
+
+.product-image .featured i {
+  margin-right: 5px;
 }
 
 @media screen and (max-width: 650px) {

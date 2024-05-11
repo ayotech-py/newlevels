@@ -44,7 +44,7 @@
   text-align: center;
   width: 100%;
   background-color: black;
-  color: white;
+  color: #fff987;
   font-size: 1rem;
   font-weight: bold;
   padding: 7px 10px;
@@ -85,6 +85,28 @@
 
 .ads-action-btn a {
   width: 48%;
+}
+
+.product-card .image {
+  position: relative;
+}
+
+.image .featured {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  background-color: #fff987;
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.image .featured i {
+  margin-right: 5px;
+}
+
+.featured-card {
+  border: 3px solid var(--yellow);
 }
 
 @media screen and (max-width: 650px) {

@@ -14,6 +14,7 @@ code {
 
 :root {
   --gray: hsl(210, 40%, 96.1%);
+  --yellow: #fff987;
 }
 
 .small-size {

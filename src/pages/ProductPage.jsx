@@ -17,6 +17,13 @@ const ProductPage = ({ products }) => {
           <div className="product-page">
             <div className="product-image">
               <img src={get_product[0].image} alt="" />
+              <p
+                className="featured"
+                style={{ display: get_product[0].featured ? "block" : "none" }}
+              >
+                <i class="fas fa-star"></i>
+                Featured
+              </p>
             </div>
             <div className="product-description">
               <div className="seller-banner">

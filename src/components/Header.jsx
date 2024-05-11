@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "./AuthProvider";
+import logo from "../images/logo.jpeg";
 
 const Header = () => {
   const { user } = useAuth();
@@ -11,7 +12,7 @@ const Header = () => {
     <div className="newlevels-header">
       <div className="brand-name">
         <Link to="/">
-          <h2>NewLevels</h2>
+          <img src={logo} alt="" srcset="" />
         </Link>
       </div>
       {user ? (
