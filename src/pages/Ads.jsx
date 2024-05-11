@@ -316,6 +316,13 @@ const Ads = () => {
           <div className="product-card">
             <div className="image">
               <img src={product.image} alt="" srcset="" />
+              <p
+                className="featured"
+                style={{ display: product.featured ? "block" : "none" }}
+              >
+                <i class="fas fa-star"></i>
+                Featured
+              </p>
             </div>
             <div className="description">
               <div className="seller-badge">
