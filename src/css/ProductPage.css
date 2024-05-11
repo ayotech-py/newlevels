@@ -16,6 +16,10 @@
   line-height: 0;
 }
 
+.product-page .product-description .product-name {
+  margin-bottom: 20px;
+}
+
 .product-page img {
   width: 100%;
   height: 100%;
@@ -126,5 +130,14 @@
 
   .product-page .product-description {
     width: 100%;
+  }
+
+  .product-page .product-description .product-name {
+    margin-bottom: 30px;
+  }
+
+  .product-image .featured {
+    top: 15px;
+    font-size: 13px;
   }
 }
