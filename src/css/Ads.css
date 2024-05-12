@@ -20,7 +20,7 @@
 
 .ads-container-form::before {
   content: "";
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -28,6 +28,7 @@
   background: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  height: 100vh;
 }
 
 .no-scroll {
@@ -37,7 +38,8 @@
   margin-bottom: -3%;
 }
 
-.ads-container .ads-form {
+.ads-container .ads-form,
+.ads-container .confirm-delete {
   position: fixed;
   top: 50%;
   left: 50%;
@@ -48,6 +50,10 @@
   background-color: white;
   border-radius: 10px;
   z-index: 2;
+}
+
+.ads-container .confirm-delete {
+  width: max-content;
 }
 
 .ads-form h3 {
@@ -120,6 +126,33 @@
   color: white;
   border-radius: 5px;
   font-weight: bold;
+  width: 100px;
+  height: 40px;
+}
+
+.featured-card {
+  border: 3px solid var(--yellow);
+}
+
+.card-title-x-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.card-title-x-btn h2 {
+  padding: 0;
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.card-title-x-btn .close-btn {
+  text-align: right;
+  cursor: pointer;
+}
+
+.card-title-x-btn .close-btn i {
+  font-size: 25px;
 }
 
 @media screen and (max-width: 650px) {
@@ -133,6 +166,10 @@
   }
 
   .ads-container .ads-form {
+    width: 80%;
+  }
+
+  .ads-container .confirm-delete {
     width: 80%;
   }
 }

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Loading from "../components/Loading";
 import { useAuth } from "../components/AuthProvider";
 import compressImage from "../components/ImageCompressor";
+import { Navigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();
@@ -77,11 +78,15 @@ const Profile = () => {
     });
 
     const response = await request.json();
-    console.log(response);
     setLoading(false);
     if (request.status === 200) {
       setMessage(response.message);
       updateUser(response.userData);
+    } else if (request.status === 400) {
+      setMessage(response.message);
+    } else {
+      setMessage("Session Expired, please login again!");
+      window.location.href = "/auth/login";
     }
     setTimeout(() => setMessage(""), 3000);
   };

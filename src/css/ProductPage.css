@@ -45,6 +45,11 @@
   border-radius: 50%;
 }
 
+.product-description .ratings {
+  display: flex;
+  align-items: center;
+}
+
 .star {
   font-size: 20px;
   color: gray;
@@ -115,6 +120,13 @@
   margin-right: 5px;
 }
 
+.product-page-condition .condition {
+  width: max-content;
+  margin: -5px;
+  margin-left: 15px;
+  font-size: 15px;
+}
+
 @media screen and (max-width: 650px) {
   .product-page {
     margin-left: 5%;
@@ -138,6 +150,12 @@
 
   .product-image .featured {
     top: 15px;
+    font-size: 13px;
+  }
+
+  .product-page-condition .condition {
+    margin: -10px;
+    margin-left: 10px;
     font-size: 13px;
   }
 }

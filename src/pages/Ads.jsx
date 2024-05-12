@@ -7,6 +7,8 @@ import compressImage from "../components/ImageCompressor";
 const Ads = () => {
   const [productImage, setProductImage] = useState(null);
   const [formState, setFormState] = useState(false);
+  const [confirmState, setConfirmState] = useState(false);
+  const [deleteId, setDeleteId] = useState(null);
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -26,6 +28,14 @@ const Ads = () => {
       return match.toUpperCase();
     });
   }
+
+  const clearForms = () => {
+    setName("");
+    setDescription("");
+    setPrice("");
+    setCategory("");
+    setProductImage(null);
+  };
 
   const handleDelete = async (product_id) => {
     const token = window.localStorage.getItem("accessToken");
@@ -56,7 +66,8 @@ const Ads = () => {
         alert("Object with the specified ID not found.");
       }
     } else {
-      alert("An error occured!");
+      alert("Session Expired, please login again!");
+      window.location.href = "/auth/login";
     }
   };
 
@@ -109,6 +120,11 @@ const Ads = () => {
       setProductImage(null);
       user.product.push(response.product);
       updateUser(user);
+    } else if (request.status === 400) {
+      setMessage(response.message);
+    } else {
+      setMessage("Session Expired, please login again!");
+      window.location.href = "/auth/login";
     }
     setTimeout(() => setMessage(""), 3000);
   };
@@ -153,13 +169,17 @@ const Ads = () => {
     });
 
     const response = await request.json();
-    console.log(response);
     setMessage(response.message);
     setLoading(false);
     if (request.status === 200) {
       let index = user.product.findIndex((obj) => obj.id === product_id);
       user.product[index] = response.product;
       updateUser(user);
+    } else if (request.status === 400) {
+      setMessage(response.message);
+    } else {
+      setMessage("Session Expired, please login again!");
+      window.location.href = "/auth/login";
     }
     setTimeout(() => setMessage(""), 3000);
   };
@@ -205,13 +225,47 @@ const Ads = () => {
 
   return (
     <div
-      className={`ads-container ${formState ? "ads-container-form no-scroll" : ""}`}
+      className={`ads-container ${formState || confirmState ? "ads-container-form no-scroll" : ""}`}
     >
+      <section
+        className="confirm-delete"
+        style={{ display: confirmState ? "block" : "none" }}
+      >
+        <p>Are you sure you want to delete this product?</p>
+        <div className="ads-form-btn">
+          <button
+            className="medium-size save"
+            onClick={() => handleDelete(deleteId)}
+          >
+            {loading ? <Loading /> : "Yes"}
+          </button>
+          <button
+            className="medium-size"
+            onClick={() => {
+              setConfirmState(false);
+            }}
+          >
+            No
+          </button>
+        </div>
+      </section>
       <section
         className="ads-form"
         style={{ display: formState ? "block" : "none" }}
       >
-        <h2>Add Product</h2>
+        <div className="card-title-x-btn">
+          <h2>{edit ? "Update Product" : "Add Product"}</h2>
+          <div
+            className="close-btn"
+            onClick={() => {
+              setFormState(false);
+              setEdit(false);
+              clearForms();
+            }}
+          >
+            <i class="fa fa-xmark"></i>
+          </div>
+        </div>
         <div
           className="response-message"
           style={{ display: message.length > 0 ? "block" : "none" }}
@@ -295,15 +349,6 @@ const Ads = () => {
           >
             {loading ? <Loading /> : edit ? "Update" : "Post"}
           </button>
-          <button
-            className="medium-size"
-            onClick={() => {
-              setFormState(false);
-              setEdit(false);
-            }}
-          >
-            Cancel
-          </button>
         </div>
       </section>
       <section className="create_ad">
@@ -313,7 +358,9 @@ const Ads = () => {
       </section>
       <section className="product-list">
         {user.product.map((product) => (
-          <div className="product-card">
+          <div
+            className={`product-card ${product.featured ? "featured-card" : ""}`}
+          >
             <div className="image">
               <img src={product.image} alt="" srcset="" />
               <p
@@ -352,7 +399,10 @@ const Ads = () => {
                 </Link>
                 <Link to={""}>
                   <button
-                    onClick={() => handleDelete(product.id)}
+                    onClick={() => {
+                      setDeleteId(product.id);
+                      setConfirmState(true);
+                    }}
                     className="medium-size"
                   >
                     Delete

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
+import LargeLoading from "../components/LargeLoading";
+import ProductNotFound from "../components/ProductNotFound";
 
 const Home = ({ products }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -52,13 +54,19 @@ const Home = ({ products }) => {
           placeholder="Search"
         />
       </section>
-      <section className="product-list">
-        {filterProducts(products).length > 0 ? (
-          filterProducts(products).map((product) => (
-            <ProductCard product={product} />
-          ))
+      <section
+        className={`${products.length > 0 ? "product-list" : "loading-container"} `}
+      >
+        {products.length > 0 ? (
+          filterProducts(products).length > 0 ? (
+            filterProducts(products).map((product) => (
+              <ProductCard product={product} />
+            ))
+          ) : (
+            <ProductNotFound />
+          )
         ) : (
-          <>Product does not exist</>
+          <LargeLoading />
         )}
       </section>
     </main>

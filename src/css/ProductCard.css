@@ -19,7 +19,7 @@
 
 .product-card .description {
   line-height: 0.5;
-  padding: 15px 15px;
+  padding: 10px 10px;
 }
 
 .product-card .description .location,
@@ -102,12 +102,28 @@
   font-size: 12px;
 }
 
-.image .featured i {
+.image .featured i,
+.price-x-condition .condition i,
+.product-page-condition .condition i {
   margin-right: 4px;
 }
 
 .featured-card {
-  border: 3px solid var(--yellow);
+  border: 2px solid var(--yellow);
+}
+
+.price-x-condition {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price-x-condition .condition,
+.product-page-condition .condition {
+  background-color: var(--gray);
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 12px;
 }
 
 @media screen and (max-width: 650px) {
@@ -124,6 +140,12 @@
     right: 8px;
     background-color: #fff987;
     padding: 6px 9px;
+    font-size: 10px;
+  }
+
+  .price-x-condition .condition {
+    padding: 5px 6px;
+    border-radius: 20px;
     font-size: 10px;
   }
 }

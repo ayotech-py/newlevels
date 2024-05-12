@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
+import NotFound from "./components/NotFound";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -100,6 +101,7 @@ const App = () => {
               />
             }
           />
+          <Route path="*" element={<Layout children={<NotFound />} />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

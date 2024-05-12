@@ -60,6 +60,46 @@ footer {
   margin: 0 auto;
 }
 
+.large-loader {
+  border: 10px solid rgb(243, 235, 235);
+  border-top: 10px solid gray;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+  margin-top: 100px;
+  margin-bottom: 100px;
+}
+
+.loading-container {
+  width: 100%;
+  text-align: center;
+}
+
+.product-not-found {
+  text-align: center;
+  width: 550%;
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
+
+.product-not-found i {
+  font-size: 50px;
+}
+
+.not-found {
+  text-align: center;
+  width: 100%;
+  margin-top: 200px;
+  margin-bottom: 150px;
+}
+
+.not-found p {
+  font-size: 50px;
+  margin: 0;
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -84,5 +124,9 @@ footer {
 
   .x-large-size {
     font-size: 20px;
+  }
+
+  .product-not-found {
+    width: 200%;
   }
 }

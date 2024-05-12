@@ -26,9 +26,15 @@ const ProductCard = ({ product }) => {
           <i class="fa-solid fa-location-dot"></i>
           <p>{product.customer.location}</p>
         </div>
-        <h3 className="medium-size medium-size-h3">
-          ₦{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-        </h3>
+        <div className="price-x-condition">
+          <h3 className="medium-size medium-size-h3">
+            ₦{product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+          </h3>
+          <p className="condition">
+            <i class="fas fa-info-circle"></i>
+            Fairly Used
+          </p>
+        </div>
         <Link to={`/product/${product.id}`}>
           <button className="medium-size">Details</button>
         </Link>

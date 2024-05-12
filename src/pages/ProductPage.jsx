@@ -30,7 +30,7 @@ const ProductPage = ({ products }) => {
                 <div className="image-container">
                   <img src={get_product[0].customer.profile_image} alt="" />
                 </div>
-                <p className="large-size">Ogunbona Toys & Firearms</p>
+                <p className="large-size">{get_product[0].customer.name}</p>
               </div>
               <div className="product-url">
                 <p>
@@ -41,11 +41,19 @@ const ProductPage = ({ products }) => {
                 <p className="x-large-size">{get_product[0].title}</p>
               </div>
               <div className="ratings">
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
-                <span className="star">&#9733;</span>
+                <div>
+                  <span className="star">&#9733;</span>
+                  <span className="star">&#9733;</span>
+                  <span className="star">&#9733;</span>
+                  <span className="star">&#9733;</span>
+                  <span className="star">&#9733;</span>
+                </div>
+                <div className="product-page-condition">
+                  <p className="condition">
+                    <i class="fas fa-info-circle"></i>
+                    Fairly Used
+                  </p>
+                </div>
               </div>
               <div className="location">
                 <i class="fa-solid fa-location-dot"></i>
