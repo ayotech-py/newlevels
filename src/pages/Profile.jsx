@@ -99,7 +99,17 @@ const Profile = () => {
         className="ads-form"
         style={{ display: formState ? "block" : "none" }}
       >
-        <h2>Add Product</h2>
+        <div className="card-title-x-btn">
+          <h2>Update Profile</h2>
+          <div
+            className="close-btn"
+            onClick={() => {
+              setFormState(false);
+            }}
+          >
+            <i class="fa fa-xmark"></i>
+          </div>
+        </div>
         <div
           className="response-message"
           style={{ display: message.length > 0 ? "block" : "none" }}
@@ -172,14 +182,6 @@ const Profile = () => {
         <div className="ads-form-btn">
           <button className="medium-size save" onClick={handleUpdate}>
             {loading ? <Loading /> : "Update Profile"}
-          </button>
-          <button
-            className="medium-size"
-            onClick={() => {
-              setFormState(false);
-            }}
-          >
-            Cancel
           </button>
         </div>
       </section>

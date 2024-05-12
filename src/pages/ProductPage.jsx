@@ -32,7 +32,7 @@ const ProductPage = ({ products }) => {
                 </div>
                 <p className="large-size">{get_product[0].customer.name}</p>
               </div>
-              <div className="product-url">
+              <div className="product-url medium-size">
                 <p>
                   Home / {get_product[0].category} / {get_product[0].title}
                 </p>
@@ -55,7 +55,7 @@ const ProductPage = ({ products }) => {
                   </p>
                 </div>
               </div>
-              <div className="location">
+              <div className="location medium-size">
                 <i class="fa-solid fa-location-dot"></i>
                 <p>{get_product[0].customer.location}</p>
               </div>

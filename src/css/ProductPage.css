@@ -57,14 +57,15 @@
 }
 
 .star {
-  font-size: 20px;
   color: gray;
+  font-size: 20px;
 }
 
 .product-description .product-url {
   color: gray;
   line-height: 1.5;
   margin: 0;
+  margin-bottom: -10px;
 }
 
 .product-description .product-info {
@@ -105,8 +106,9 @@
 }
 
 .product-description .location {
-  margin-top: 20px;
+  margin-top: 15px;
   color: gray;
+  margin-bottom: -5px;
 }
 
 .product-page .product-image {
@@ -161,7 +163,7 @@
   }
 
   .product-page-condition .condition {
-    margin: -10px;
+    margin: -5px;
     margin-left: 10px;
     font-size: 13px;
   }
@@ -169,5 +171,9 @@
   .product-page .product-description .product-name {
     line-height: 1.2;
     margin: 0;
+  }
+
+  .star {
+    font-size: 15px;
   }
 }
