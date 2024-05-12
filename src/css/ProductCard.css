@@ -102,7 +102,20 @@
   font-size: 12px;
 }
 
+.image .featured-container {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+}
+
+.image .featured-container p {
+  padding: 7px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
 .image .featured i,
+.image .featured-container p i,
 .price-x-condition .condition i,
 .product-page-condition .condition i {
   margin-right: 4px;

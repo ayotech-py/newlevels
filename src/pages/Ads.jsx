@@ -14,6 +14,7 @@ const Ads = () => {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
+  const [condition, setCondition] = useState("");
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -34,6 +35,7 @@ const Ads = () => {
     setDescription("");
     setPrice("");
     setCategory("");
+    setCondition("");
     setProductImage(null);
   };
 
@@ -84,6 +86,7 @@ const Ads = () => {
       description: description,
       price: price,
       category: category,
+      condition: condition,
       image: productImage,
     };
 
@@ -144,6 +147,7 @@ const Ads = () => {
       price: price,
       category: category,
       image: productImage,
+      condition: condition,
     };
 
     for (const key in body) {
@@ -191,6 +195,7 @@ const Ads = () => {
     setDescription(user.product[index].description);
     setPrice(user.product[index].price);
     setCategory(user.product[index].category);
+    setCondition(user.product[index].condition);
     setProductImage(user.product[index].image);
 
     setEdit(true);
@@ -208,10 +213,11 @@ const Ads = () => {
     "Misc",
   ];
 
+  const conditions = ["Brand New", "Used", "Fairly Used"];
+
   const handleImageChange = (setImage) => async (event) => {
     let file = event.target.files[0];
     file = await compressImage(file);
-    console.log(file);
     if (file) {
       const reader = new FileReader();
 
@@ -330,6 +336,19 @@ const Ads = () => {
           />
           <select
             id="options"
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            placeholder="Select Product Condition"
+          >
+            <option value="" disabled>
+              Select Condition...
+            </option>
+            {conditions.map((obj) => (
+              <option value={obj}>{obj}</option>
+            ))}
+          </select>
+          <select
+            id="options"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             placeholder="Select Cateogory"
@@ -363,13 +382,32 @@ const Ads = () => {
           >
             <div className="image">
               <img src={product.image} alt="" srcset="" />
-              <p
-                className="featured"
-                style={{ display: product.featured ? "block" : "none" }}
-              >
-                <i class="fas fa-star"></i>
-                Featured
-              </p>
+              <div className="featured-container">
+                <p
+                  style={{
+                    display: product.featured ? "block" : "none",
+                    backgroundColor: "var(--yellow)",
+                  }}
+                >
+                  <i class="fas fa-star"></i>
+                  Featured
+                </p>
+                <p
+                  style={{
+                    display: "block",
+                    backgroundColor: "var(--gray)",
+                  }}
+                >
+                  <i
+                    class={
+                      product.approved
+                        ? "fas fa-check"
+                        : "fas fa-hourglass-half"
+                    }
+                  ></i>
+                  {product.approved ? "Approved" : "Pending"}
+                </p>
+              </div>
             </div>
             <div className="description">
               <div className="seller-badge">
@@ -383,11 +421,18 @@ const Ads = () => {
                 <i class="fa-solid fa-location-dot"></i>
                 <p>{product.customer.location}</p>
               </div>
-              <h3 className="medium-size">
-                ₦
-                {product.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-              </h3>
-
+              <div className="price-x-condition">
+                <h3 className="medium-size medium-size-h3">
+                  ₦
+                  {product.price
+                    .toString()
+                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                </h3>
+                <p className="condition">
+                  <i class="fas fa-info-circle"></i>
+                  {product.condition}
+                </p>
+              </div>
               <div className="ads-action-btn">
                 <Link to={""}>
                   <button

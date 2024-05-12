@@ -32,7 +32,7 @@ const ProductCard = ({ product }) => {
           </h3>
           <p className="condition">
             <i class="fas fa-info-circle"></i>
-            Fairly Used
+            {product.condition}
           </p>
         </div>
         <Link to={`/product/${product.id}`}>
