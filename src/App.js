@@ -10,6 +10,7 @@ import "../src/css/Register.css";
 import "../src/css/ProductPage.css";
 import "../src/css/Ads.css";
 import "../src/css/Profile.css";
+import "../src/css/Customer.css";
 
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
@@ -17,6 +18,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Ads from "./pages/Ads";
 import Profile from "./pages/Profile";
+import Customer from "./pages/Customer";
 
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -36,7 +38,6 @@ const App = () => {
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setProducts(data);
     }
   };
@@ -63,6 +64,16 @@ const App = () => {
           </Route>
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
+          <Route
+            path="/customer/:customer_name"
+            element={
+              <Layout
+                children={
+                  <Customer product={products.length > 0 ? products : []} />
+                }
+              />
+            }
+          />
           <Route path="/product/">
             <Route
               path=":product_id"

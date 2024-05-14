@@ -1,6 +1,7 @@
 import React from "react";
 import SimilarProduct from "../components/SimilarProducts";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ProductPage = ({ products }) => {
   const { product_id } = useParams();
@@ -26,12 +27,15 @@ const ProductPage = ({ products }) => {
               </p>
             </div>
             <div className="product-description">
-              <div className="seller-banner">
+              <Link
+                to={`/customer/${get_product[0].customer.name}`}
+                className="seller-banner"
+              >
                 <div className="image-container">
                   <img src={get_product[0].customer.profile_image} alt="" />
                 </div>
                 <p className="large-size">{get_product[0].customer.name}</p>
-              </div>
+              </Link>
               <div className="product-url medium-size">
                 <p>
                   Home / {get_product[0].category} / {get_product[0].title}

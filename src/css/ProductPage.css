@@ -61,6 +61,11 @@
   font-size: 20px;
 }
 
+.product-description a {
+  text-decoration: none;
+  color: black;
+}
+
 .product-description .product-url {
   color: gray;
   line-height: 1.5;
