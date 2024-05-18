@@ -48,6 +48,29 @@
   grid-gap: 1%;
 }
 
+.action-buttons {
+  display: flex;
+  margin-top: 10px;
+}
+
+.action-buttons button {
+  margin-right: 10px;
+  padding: 7px 10px;
+  border: none;
+  background-color: black;
+  color: white;
+  border-radius: 5px;
+  font-weight: bold;
+  width: 140px;
+  height: 40px;
+}
+
+.action-buttons .contact-btn {
+  background-color: var(--gray);
+  color: black;
+  border: 2px solid black;
+}
+
 @media screen and (max-width: 650px) {
   .customer-page {
     margin-left: 5%;
@@ -75,5 +98,9 @@
     grid-template-columns: 48% 48%;
     grid-gap: 0px;
     justify-content: space-between;
+  }
+
+  .page-contact {
+    text-align: center;
   }
 }

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Loading from "../components/Loading";
 import { useAuth } from "../components/AuthProvider";
 import compressImage from "../components/ImageCompressor";
-import { Navigate } from "react-router-dom";
 
 const Profile = () => {
   const { user, updateUser } = useAuth();

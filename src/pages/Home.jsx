@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import ProductCard from "../components/ProductCard";
 import LargeLoading from "../components/LargeLoading";
 import ProductNotFound from "../components/ProductNotFound";
+import { useAuth } from "../components/AuthProvider";
 
 const Home = ({ products }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [search, setSearch] = useState("");
+  const { user } = useAuth();
 
   const categories = [
     "All",

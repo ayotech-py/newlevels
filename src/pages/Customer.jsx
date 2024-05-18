@@ -56,17 +56,21 @@ const Customer = ({ product }) => {
             </div>
             <div className="page-contact">
               <h2>{customer.name}</h2>
-              <div className="page-contact-list">
+              {/* <div className="page-contact-list">
                 <i class="fas fa-envelope"></i>
                 <p>{customer.email}</p>
-              </div>
+              </div> */}
               <div className="page-contact-list">
                 <i class="fas fa-map-marker-alt"></i>
                 <p>{customer.location}</p>
               </div>
               <div className="page-contact-list">
                 <i class="fas fa-phone"></i>
-                <p>{customer.phone}</p>
+                <p>0{customer.phone}</p>
+              </div>
+              <div className="action-buttons">
+                <button className="medium-size">Message</button>
+                <button className="medium-size contact-btn">Contact</button>
               </div>
             </div>
           </div>

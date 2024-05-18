@@ -24,6 +24,12 @@ const Ads = () => {
   const [edit, setEdit] = useState(false);
   const [updateId, setUpdateId] = useState(null);
 
+  /* const message_list = user.chats
+    .filter((chat) => chat.chat_room === 2)
+    .splice(-1)[0]["content"];
+
+  console.log(message_list); */
+
   function toTitleCase(str) {
     return str.toLowerCase().replace(/(?:^|\s|-)\w/g, function (match) {
       return match.toUpperCase();

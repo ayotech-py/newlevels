@@ -10,6 +10,7 @@ import "../src/css/Register.css";
 import "../src/css/ProductPage.css";
 import "../src/css/Ads.css";
 import "../src/css/Profile.css";
+import "../src/css/Chatroom.css";
 import "../src/css/Customer.css";
 
 import Layout from "./components/Layout";
@@ -19,6 +20,7 @@ import Login from "./pages/Login";
 import Ads from "./pages/Ads";
 import Profile from "./pages/Profile";
 import Customer from "./pages/Customer";
+import Chatroom from "./pages/Chatroom";
 
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -62,6 +64,7 @@ const App = () => {
               }
             />
           </Route>
+          <Route path="/chat" element={<Layout children={<Chatroom />} />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
           <Route
