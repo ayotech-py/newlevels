@@ -40,10 +40,10 @@ const Chatroom = () => {
 
   useEffect(() => {
     console.log("sending");
-    getData();
   }, []);
 
   useEffect(() => {
+    getData();
     if (roomId) {
       const pusher = new Pusher("5f083f9b2bd0c3f2b6df", {
         cluster: "eu",
