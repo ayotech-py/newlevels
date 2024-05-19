@@ -91,19 +91,7 @@ const Chatroom = () => {
   };
 
   useEffect(() => {
-    /* const websocket = new WebSocket(
-      `ws://localhost:8000/ws/chat/2/${user.customer.email}`,
-    );
-    websocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      //console.log("Message:", data.message);
-      console.log("Message:", data);
-      setMessages((prevMessages) => [...prevMessages, data]);
-    };
-    setWs(websocket);
-    return () => websocket.close(); */
     console.log(user.chats.filter((chat) => chat.chat_room === roomId));
-    //getMessages();
     if (roomId) {
       console.log("room id set");
       connectWebSocket();
@@ -116,7 +104,7 @@ const Chatroom = () => {
         ws.current.close();
       }
     };
-  }, []);
+  }, [roomId]);
 
   return (
     <div className="chatroom">
