@@ -8,7 +8,7 @@ import Pusher from "pusher-js";
 const Chatroom = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const { user } = useAuth();
+  const { user, updateUser } = useAuth();
   const [roomId, setRoomId] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [chatState, setChatState] = useState(false);
@@ -31,6 +31,9 @@ const Chatroom = () => {
 
       channel.bind("chat_message", (data) => {
         setMessages((prevMessages) => [...prevMessages, data]);
+
+        user.chats.filter((chat) => chat.chat_room === roomId).push(data);
+        updateUser(user);
       });
 
       pusher.connection.bind("connected", () => {
