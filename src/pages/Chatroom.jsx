@@ -16,6 +16,7 @@ const Chatroom = () => {
   const channelRef = useRef(null);
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 5;
+  const [chatData, setChatData] = useState([]);
 
   const getData = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/get-customer-data/`;
@@ -31,7 +32,9 @@ const Chatroom = () => {
     });
     if (response.status === 200) {
       const data = await response.json();
+      console.log(data.userData);
       updateUser(data.userData);
+      setChatData(data.userData);
     }
   };
 
