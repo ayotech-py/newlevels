@@ -40,6 +40,7 @@ const Chatroom = () => {
   };
 
   useEffect(() => {
+    getData();
     console.log("sending");
   }, []);
 
