@@ -49,8 +49,12 @@ const Chatroom = () => {
       return; // Prevent multiple WebSocket connections
     }
 
+    /* ws.current = new WebSocket(
+      `ws://localhost:8000/ws/chat/${roomId}/${user.customer.email}`,
+    ); */
+
     ws.current = new WebSocket(
-      `ws://localhost:8000/ws/chat/2/${user.customer.email}`,
+      `ws://newlevels-backend.vercel.app/ws/chat/${roomId}/${user.customer.email}`,
     );
 
     ws.current.onopen = () => {
@@ -100,7 +104,10 @@ const Chatroom = () => {
     return () => websocket.close(); */
     console.log(user.chats.filter((chat) => chat.chat_room === roomId));
     //getMessages();
-    connectWebSocket();
+    if (roomId) {
+      console.log("room id set");
+      connectWebSocket();
+    }
     //setMessages(user.chats.filter((chat) => chat.chat_room === roomId));
     console.log(user);
     console.log(messages);
