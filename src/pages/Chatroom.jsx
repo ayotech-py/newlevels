@@ -35,6 +35,7 @@ const Chatroom = () => {
       console.log(data.userData);
       updateUser(data.userData);
       setChatData(data.userData);
+      console.log(chatData);
     }
   };
 
@@ -138,7 +139,7 @@ const Chatroom = () => {
     }
   };
 
-  return (
+  return chatData.length > 0 ? (
     <div className="chatroom">
       <section className={`${showChat ? "hide-chat" : "show-chat"}`}>
         <div className="messages">
@@ -146,11 +147,11 @@ const Chatroom = () => {
             <h2>Chats</h2>
           </div>
           <div className="message-list">
-            {user.chat_rooms.map((room) => (
+            {chatData.chat_rooms.map((room) => (
               <div
                 onClick={() => {
                   setMessages(
-                    user.chats.filter((chat) => chat.chat_room === room.id),
+                    chatData.chats.filter((chat) => chat.chat_room === room.id),
                   );
                   setRoomId(room.id);
                   console.log(room.id);
@@ -159,22 +160,22 @@ const Chatroom = () => {
               >
                 <ChatList
                   name={
-                    user.customer.email === room.member1.email
+                    chatData.customer.email === room.member1.email
                       ? room.member2.name
                       : room.member1.name
                   }
                   product={room.product.title.substring(0, 35)}
                   image={
-                    user.customer.email === room.member1.email
+                    chatData.customer.email === room.member1.email
                       ? room.member2.profile_image
                       : room.member1.profile_image
                   }
-                  message={user.chats
+                  message={chatData.chats
                     .filter((chat) => chat.chat_room === room.id)
                     .splice(-1)[0]
                     ["content"].substring(0, 35)}
                   date={
-                    user.chats
+                    chatData.chats
                       .filter((chat) => chat.chat_room === room.id)
                       .splice(-1)[0]["timestamp"]
                   }
@@ -195,13 +196,15 @@ const Chatroom = () => {
               <div className="chat-image">
                 <img
                   src={
-                    user.customer.email ===
-                    user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                    chatData.customer.email ===
+                    chatData.chat_rooms.filter((chat) => chat.id === roomId)[0]
                       .member1.email
-                      ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                          .member2.profile_image
-                      : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                          .member1.profile_image
+                      ? chatData.chat_rooms.filter(
+                          (chat) => chat.id === roomId,
+                        )[0].member2.profile_image
+                      : chatData.chat_rooms.filter(
+                          (chat) => chat.id === roomId,
+                        )[0].member1.profile_image
                   }
                   alt=""
                   srcset=""
@@ -209,22 +212,24 @@ const Chatroom = () => {
               </div>
               <div className="chat-details">
                 <p className="medium-size">
-                  {user.customer.email ===
-                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                  {chatData.customer.email ===
+                  chatData.chat_rooms.filter((chat) => chat.id === roomId)[0]
                     .member1.email
-                    ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                        .member2.name
-                    : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                        .member1.name}
+                    ? chatData.chat_rooms.filter(
+                        (chat) => chat.id === roomId,
+                      )[0].member2.name
+                    : chatData.chat_rooms.filter(
+                        (chat) => chat.id === roomId,
+                      )[0].member1.name}
                 </p>
                 <p className="chat-product medium-size">
-                  {user.customer.email ===
-                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                  {chatData.customer.email ===
+                  chatData.chat_rooms.filter((chat) => chat.id === roomId)[0]
                     .member1.email
-                    ? user.chat_rooms
+                    ? chatData.chat_rooms
                         .filter((chat) => chat.id === roomId)[0]
                         .product.title.substring(0, 35)
-                    : user.chat_rooms
+                    : chatData.chat_rooms
                         .filter((chat) => chat.id === roomId)[0]
                         .product.title.substring(0, 35)}
                 </p>
@@ -233,7 +238,7 @@ const Chatroom = () => {
             <div className="chat-messages-box" style={{ overflowY: "auto" }}>
               {messages.length > 0 ? (
                 messages.map((obj) =>
-                  obj.sender === user.customer.email ? (
+                  obj.sender === chatData.customer.email ? (
                     <div className="float-right">
                       <div className="chat-sender">
                         <p className="sender-message">{obj.content}</p>
@@ -270,6 +275,8 @@ const Chatroom = () => {
         </div>
       )}
     </div>
+  ) : (
+    <></>
   );
 };
 
