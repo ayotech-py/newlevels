@@ -91,7 +91,7 @@
 
 .chat-messages-box {
   padding: 10px 15px;
-  height: 550px; /* Set the height as needed */
+  height: 63vh;
   scrollbar-width: 1px solid;
 }
 
@@ -99,7 +99,7 @@
   margin-top: 10px;
   max-width: 300px;
   background-color: var(--yellow);
-  padding: 10px;
+  padding: 6px 8px 1px 8px;
   border-radius: 10px;
   border-bottom-right-radius: 0px;
   margin-top: 10px;
@@ -107,7 +107,7 @@
 
 .chat-sender p {
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 5px;
 }
 
@@ -121,14 +121,14 @@
   margin-top: 10px;
   max-width: max-content;
   background-color: var(--gray);
-  padding: 10px;
+  padding: 6px 8px 1px 8px;
   border-radius: 10px;
   border-bottom-left-radius: 0px;
 }
 
 .chat-receiver p {
   margin: 0;
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 5px;
 }
 
