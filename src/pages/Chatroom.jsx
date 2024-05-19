@@ -134,17 +134,16 @@ const Chatroom = () => {
                       ? room.member2.name
                       : room.member1.name
                   }
-                  product={room.product.title}
+                  product={room.product.title.substring(0, 35)}
                   image={
                     user.customer.email === room.member1.email
                       ? room.member2.profile_image
                       : room.member1.profile_image
                   }
-                  message={
-                    user.chats
-                      .filter((chat) => chat.chat_room === room.id)
-                      .splice(-1)[0]["content"]
-                  }
+                  message={user.chats
+                    .filter((chat) => chat.chat_room === room.id)
+                    .splice(-1)[0]
+                    ["content"].substring(0, 35)}
                   date={
                     user.chats
                       .filter((chat) => chat.chat_room === room.id)
@@ -193,10 +192,12 @@ const Chatroom = () => {
                   {user.customer.email ===
                   user.chat_rooms.filter((chat) => chat.id === roomId)[0]
                     .member1.email
-                    ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                        .product.title
-                    : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                        .product.title}
+                    ? user.chat_rooms
+                        .filter((chat) => chat.id === roomId)[0]
+                        .product.title.substring(0, 35)
+                    : user.chat_rooms
+                        .filter((chat) => chat.id === roomId)[0]
+                        .product.title.substring(0, 35)}
                 </p>
               </div>
             </div>
