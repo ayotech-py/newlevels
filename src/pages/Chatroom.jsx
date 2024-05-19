@@ -265,7 +265,9 @@ const Chatroom = () => {
           </div>
         </section>
       ) : (
-        <LargeLoading />
+        <div className={`${showChat ? "show-chat" : "hide-chat"}`}>
+          <LargeLoading />
+        </div>
       )}
     </div>
   );
