@@ -3,7 +3,6 @@ import ChatList from "../components/ChatList";
 import { useAuth } from "../components/AuthProvider";
 import DateFormat from "../components/DateFormat";
 import LargeLoading from "../components/LargeLoading";
-import Pusher from "pusher-js";
 
 const Chatroom = () => {
   //const [ws, setWs] = useState(null);
@@ -12,107 +11,98 @@ const Chatroom = () => {
   const [messages, setMessages] = useState([]);
   const { user } = useAuth();
   const reconnectAttempts = useRef(0);
+  const maxReconnectAttempts = 10;
   const [roomId, setRoomId] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [chatState, setChatState] = useState(false);
-  const pusherRef = useRef(null);
-  const channelRef = useRef(null);
-  const reconnectAttemptsRef = useRef(0);
-  const maxReconnectAttempts = 5;
+
+  const getMessages = async () => {
+    const url = `${process.env.REACT_APP_BASE_URL}/messages/?room_id=${2}`;
+
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        ApiAuthorization: process.env.REACT_APP_API_KEY,
+      },
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setMessages(data);
+      console.log(data);
+    }
+  };
+
+  const sendMessage = () => {
+    if (ws.current && ws.current.readyState === WebSocket.OPEN) {
+      const messageData = { message, sender: user.customer.email };
+      ws.current.send(JSON.stringify(messageData));
+      setMessage(""); // Clear the input after sending
+    } else {
+      console.error("WebSocket is not open");
+    }
+  };
+
+  const connectWebSocket = () => {
+    if (ws.current) {
+      return; // Prevent multiple WebSocket connections
+    }
+
+    ws.current = new WebSocket(
+      `ws://localhost:8000/ws/chat/${roomId}/${user.customer.email}`,
+    );
+
+    /* ws.current = new WebSocket(
+      `wss://newlevels-backend.vercel.app/ws/chat/${roomId}/${user.customer.email}`,
+    ); */
+
+    ws.current.onopen = () => {
+      console.log("WebSocket connected");
+      setChatState(true);
+      reconnectAttempts.current = 0; // Reset reconnect attempts on successful connection
+    };
+
+    ws.current.onmessage = (e) => {
+      const data = JSON.parse(e.data);
+      console.log("Message:", data);
+      setMessages((prevMessages) => [...prevMessages, data]);
+    };
+
+    ws.current.onclose = (e) => {
+      console.log("WebSocket closed", e);
+      ws.current = null; // Reset WebSocket instance on close
+      if (reconnectAttempts.current < maxReconnectAttempts) {
+        const timeout = Math.min(
+          1000 * Math.pow(2, reconnectAttempts.current),
+          30000,
+        ); // Exponential backoff with a max of 30 seconds
+        reconnectAttempts.current += 1;
+        setTimeout(connectWebSocket, timeout);
+      } else {
+        console.log("Max reconnect attempts reached");
+      }
+    };
+
+    ws.current.onerror = (err) => {
+      console.error("WebSocket error", err);
+      ws.current.close(); // Close the connection on error to trigger reconnection
+    };
+  };
 
   useEffect(() => {
+    console.log(user.chats.filter((chat) => chat.chat_room === roomId));
     if (roomId) {
-      // Check if roomId is truthy
-      const pusher = new Pusher("5f083f9b2bd0c3f2b6df", {
-        cluster: "eu",
-        forceTLS: true,
-      });
-
-      pusherRef.current = pusher;
-
-      const channel = pusher.subscribe(`chat_${roomId}`);
-      channelRef.current = channel;
-
-      channel.bind("chat_message", (data) => {
-        setMessages((prevMessages) => [...prevMessages, data]);
-      });
-
-      // Reconnect event handling
-      pusher.connection.bind("connected", () => {
-        setChatState(true);
-        console.log("Pusher connected");
-        reconnectAttemptsRef.current = 0; // Reset reconnect attempts on successful connection
-      });
-
-      pusher.connection.bind("disconnected", () => {
-        console.log("Pusher disconnected");
-        handleReconnect();
-      });
-
-      pusher.connection.bind("error", (err) => {
-        console.error("Pusher connection error:", err);
-        handleReconnect();
-      });
-
-      return () => {
-        channel.unbind_all();
-        channel.unsubscribe();
-        pusher.disconnect();
-      };
+      console.log("room id set");
+      connectWebSocket();
     }
-  }, [roomId]);
-
-  const handleReconnect = () => {
-    if (reconnectAttemptsRef.current < maxReconnectAttempts) {
-      const timeout = Math.min(
-        1000 * Math.pow(2, reconnectAttemptsRef.current),
-        30000,
-      ); // Exponential backoff with a max of 30 seconds
-      reconnectAttemptsRef.current += 1;
-      console.log(`Reconnecting in ${timeout / 1000} seconds...`);
-      setTimeout(() => {
-        console.log("Attempting to reconnect...");
-        reconnect();
-      }, timeout);
-    } else {
-      console.log("Max reconnect attempts reached");
-    }
-  };
-
-  const reconnect = () => {
-    if (!pusherRef.current) return;
-
-    pusherRef.current.connect();
-  };
-
-  const sendMessage = async () => {
-    const messageData = { message, sender: user.customer.email };
-
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/send_message`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            room_id: roomId,
-            sender: user.customer.email,
-            message,
-          }),
-        },
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to send message");
+    //setMessages(user.chats.filter((chat) => chat.chat_room === roomId));
+    console.log(user);
+    console.log(messages);
+    return () => {
+      if (ws.current) {
+        ws.current.close();
       }
-
-      setMessage(""); // Clear the input after sending
-    } catch (error) {
-      console.error("Error sending message:", error);
-    }
-  };
+    };
+  }, [roomId]);
 
   return (
     <div className="chatroom">
