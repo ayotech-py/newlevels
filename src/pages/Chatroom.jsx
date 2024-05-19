@@ -16,7 +16,7 @@ const Chatroom = () => {
   const channelRef = useRef(null);
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 5;
-  const [chatData, setChatData] = useState([]);
+  const [chatData, setChatData] = useState(null);
 
   const getData = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/get-customer-data/`;
@@ -140,7 +140,7 @@ const Chatroom = () => {
     }
   };
 
-  return chatData.length > 0 ? (
+  return chatData ? (
     <div className="chatroom">
       <section className={`${showChat ? "hide-chat" : "show-chat"}`}>
         <div className="messages">
