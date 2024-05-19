@@ -14,7 +14,7 @@ const Chatroom = () => {
   const maxReconnectAttempts = 10;
   const [roomId, setRoomId] = useState(null);
   const [showChat, setShowChat] = useState(false);
-  const [chatState, setChatState] = useState(false);
+  const [chatState, setChatState] = useState(true);
 
   const getMessages = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/messages/?room_id=${2}`;
