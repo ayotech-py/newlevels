@@ -17,6 +17,29 @@ const Chatroom = () => {
   const reconnectAttemptsRef = useRef(0);
   const maxReconnectAttempts = 5;
 
+  const getData = async () => {
+    const url = `${process.env.REACT_APP_BASE_URL}/get-customer-data/`;
+    const token = window.localStorage.getItem("accessToken");
+    const username = window.localStorage.getItem("username");
+
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token,
+        user: username,
+      },
+    });
+    if (response.status === 200) {
+      const data = await response.json();
+      updateUser(data.userData);
+    }
+  };
+
+  useEffect(() => {
+    console.log("sending");
+    getData();
+  }, []);
+
   useEffect(() => {
     if (roomId) {
       const pusher = new Pusher("5f083f9b2bd0c3f2b6df", {
