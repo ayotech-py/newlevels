@@ -6,12 +6,9 @@ import LargeLoading from "../components/LargeLoading";
 import Pusher from "pusher-js";
 
 const Chatroom = () => {
-  //const [ws, setWs] = useState(null);
-  const ws = useRef(null);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const { user } = useAuth();
-  const reconnectAttempts = useRef(0);
   const [roomId, setRoomId] = useState(null);
   const [showChat, setShowChat] = useState(false);
   const [chatState, setChatState] = useState(false);
@@ -22,7 +19,6 @@ const Chatroom = () => {
 
   useEffect(() => {
     if (roomId) {
-      // Check if roomId is truthy
       const pusher = new Pusher("5f083f9b2bd0c3f2b6df", {
         cluster: "eu",
         forceTLS: true,
@@ -37,7 +33,6 @@ const Chatroom = () => {
         setMessages((prevMessages) => [...prevMessages, data]);
       });
 
-      // Reconnect event handling
       pusher.connection.bind("connected", () => {
         setChatState(true);
         console.log("Pusher connected");
