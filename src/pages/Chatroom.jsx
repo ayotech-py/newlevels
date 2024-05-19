@@ -54,7 +54,7 @@ const Chatroom = () => {
     ); */
 
     ws.current = new WebSocket(
-      `wss://newlevels-backend-p4x31j7a3-ayotechpys-projects.vercel.app/ws/chat/${roomId}/${user.customer.email}`,
+      `wss://newlevels-backend.vercel.app/ws/chat/${roomId}/${user.customer.email}`,
     );
 
     ws.current.onopen = () => {
