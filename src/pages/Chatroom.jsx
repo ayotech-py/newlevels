@@ -140,7 +140,7 @@ const Chatroom = () => {
     }
   };
 
-  return chatData ? (
+  return user ? (
     <div className="chatroom">
       <section className={`${showChat ? "hide-chat" : "show-chat"}`}>
         <div className="messages">
@@ -148,11 +148,11 @@ const Chatroom = () => {
             <h2>Chats</h2>
           </div>
           <div className="message-list">
-            {chatData.chat_rooms.map((room) => (
+            {user.chat_rooms.map((room) => (
               <div
                 onClick={() => {
                   setMessages(
-                    chatData.chats.filter((chat) => chat.chat_room === room.id),
+                    user.chats.filter((chat) => chat.chat_room === room.id),
                   );
                   setRoomId(room.id);
                   console.log(room.id);
@@ -161,22 +161,22 @@ const Chatroom = () => {
               >
                 <ChatList
                   name={
-                    chatData.customer.email === room.member1.email
+                    user.customer.email === room.member1.email
                       ? room.member2.name
                       : room.member1.name
                   }
                   product={room.product.title.substring(0, 35)}
                   image={
-                    chatData.customer.email === room.member1.email
+                    user.customer.email === room.member1.email
                       ? room.member2.profile_image
                       : room.member1.profile_image
                   }
-                  message={chatData.chats
+                  message={user.chats
                     .filter((chat) => chat.chat_room === room.id)
                     .splice(-1)[0]
                     ["content"].substring(0, 35)}
                   date={
-                    chatData.chats
+                    user.chats
                       .filter((chat) => chat.chat_room === room.id)
                       .splice(-1)[0]["timestamp"]
                   }
@@ -197,15 +197,13 @@ const Chatroom = () => {
               <div className="chat-image">
                 <img
                   src={
-                    chatData.customer.email ===
-                    chatData.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                    user.customer.email ===
+                    user.chat_rooms.filter((chat) => chat.id === roomId)[0]
                       .member1.email
-                      ? chatData.chat_rooms.filter(
-                          (chat) => chat.id === roomId,
-                        )[0].member2.profile_image
-                      : chatData.chat_rooms.filter(
-                          (chat) => chat.id === roomId,
-                        )[0].member1.profile_image
+                      ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                          .member2.profile_image
+                      : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                          .member1.profile_image
                   }
                   alt=""
                   srcset=""
@@ -213,46 +211,46 @@ const Chatroom = () => {
               </div>
               <div className="chat-details">
                 <p className="medium-size">
-                  {chatData.customer.email ===
-                  chatData.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                  {user.customer.email ===
+                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
                     .member1.email
-                    ? chatData.chat_rooms.filter(
-                        (chat) => chat.id === roomId,
-                      )[0].member2.name
-                    : chatData.chat_rooms.filter(
-                        (chat) => chat.id === roomId,
-                      )[0].member1.name}
+                    ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .member2.name
+                    : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .member1.name}
                 </p>
                 <p className="chat-product medium-size">
-                  {chatData.customer.email ===
-                  chatData.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                  {user.customer.email ===
+                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
                     .member1.email
-                    ? chatData.chat_rooms
+                    ? user.chat_rooms
                         .filter((chat) => chat.id === roomId)[0]
                         .product.title.substring(0, 35)
-                    : chatData.chat_rooms
+                    : user.chat_rooms
                         .filter((chat) => chat.id === roomId)[0]
                         .product.title.substring(0, 35)}
                 </p>
               </div>
             </div>
             <div className="chat-messages-box" style={{ overflowY: "auto" }}>
-              {messages.length > 0 ? (
-                messages.map((obj) =>
-                  obj.sender === chatData.customer.email ? (
-                    <div className="float-right">
-                      <div className="chat-sender">
-                        <p className="sender-message">{obj.content}</p>
+              {roomId ? (
+                user.chats
+                  .filter((chat) => chat.chat_room === roomId)
+                  .map((obj) =>
+                    obj.sender === user.customer.email ? (
+                      <div className="float-right">
+                        <div className="chat-sender">
+                          <p className="sender-message">{obj.content}</p>
+                          <p className="time">{DateFormat(obj.timestamp)}</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="chat-receiver">
+                        <p className="receiver-message">{obj.content}</p>
                         <p className="time">{DateFormat(obj.timestamp)}</p>
                       </div>
-                    </div>
-                  ) : (
-                    <div className="chat-receiver">
-                      <p className="receiver-message">{obj.content}</p>
-                      <p className="time">{DateFormat(obj.timestamp)}</p>
-                    </div>
-                  ),
-                )
+                    ),
+                  )
               ) : (
                 <></>
               )}
