@@ -12,11 +12,13 @@
 .chatroom .messages {
   background-color: white;
   border-radius: 15px;
+  height: 100%;
 }
 
 .messages .message-head {
   padding-left: 15px;
   border-bottom: 1px solid black;
+  padding-top: 5px;
 }
 
 .chatroom .chat-image {
@@ -36,6 +38,11 @@
   padding: 10px 15px;
   align-items: center;
   border-bottom: 1px solid var(--gray);
+  cursor: pointer;
+}
+
+.message-list .chat:hover {
+  background-color: var(--gray);
 }
 
 .chat-details {
@@ -101,17 +108,18 @@
 .chat-sender p {
   margin: 0;
   font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .chat-sender .time {
   text-align: right;
-  font-size: 12px;
+  font-size: 10px;
   color: gray;
 }
 
 .chat-messages-box .chat-receiver {
   margin-top: 10px;
-  max-width: 300px;
+  max-width: max-content;
   background-color: var(--gray);
   padding: 10px;
   border-radius: 10px;
@@ -121,11 +129,12 @@
 .chat-receiver p {
   margin: 0;
   font-size: 14px;
+  margin-bottom: 5px;
 }
 
 .chat-receiver .time {
   text-align: left;
-  font-size: 12px;
+  font-size: 10px;
   color: gray;
 }
 
@@ -168,6 +177,21 @@
   border-radius: 10px;
 }
 
+.chat-messages-header i {
+  display: none;
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.hide-chat {
+  display: block;
+}
+
+.show-chat {
+  display: block;
+}
+
 @media screen and (max-width: 650px) {
   .chatroom {
     padding-left: 3%;
@@ -175,6 +199,7 @@
     grid-template-columns: 100%;
     padding-top: 20px;
     padding-bottom: 20px;
+    margin-top: -20px;
   }
 
   .chatroom .chat-messages {
@@ -184,5 +209,26 @@
 
   .chatroom .messages {
     display: block;
+  }
+
+  .chat-messages-header i {
+    display: block;
+  }
+
+  .chatroom .chat-image {
+    width: 35px;
+    height: 35px;
+  }
+
+  .hide-chat {
+    display: none;
+  }
+
+  .show-chat {
+    display: block;
+  }
+
+  .chatroom .messages {
+    height: 80vh;
   }
 }

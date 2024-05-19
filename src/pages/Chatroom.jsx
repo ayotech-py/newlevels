@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import ChatList from "../components/ChatList";
 import { useAuth } from "../components/AuthProvider";
+import DateFormat from "../components/DateFormat";
+import LargeLoading from "../components/LargeLoading";
 
 const Chatroom = () => {
   //const [ws, setWs] = useState(null);
@@ -10,6 +12,9 @@ const Chatroom = () => {
   const { user } = useAuth();
   const reconnectAttempts = useRef(0);
   const maxReconnectAttempts = 10;
+  const [roomId, setRoomId] = useState(null);
+  const [showChat, setShowChat] = useState(false);
+  const [chatState, setChatState] = useState(false);
 
   const getMessages = async () => {
     const url = `${process.env.REACT_APP_BASE_URL}/messages/?room_id=${2}`;
@@ -23,6 +28,7 @@ const Chatroom = () => {
     if (response.ok) {
       const data = await response.json();
       setMessages(data);
+      console.log(data);
     }
   };
 
@@ -49,6 +55,7 @@ const Chatroom = () => {
 
     ws.current.onopen = () => {
       console.log("WebSocket connected");
+      setChatState(true);
       reconnectAttempts.current = 0; // Reset reconnect attempts on successful connection
     };
 
@@ -91,10 +98,12 @@ const Chatroom = () => {
     };
     setWs(websocket);
     return () => websocket.close(); */
-    console.log(user.chats.filter((chat) => chat.Chatroom === 1));
-    getMessages();
+    console.log(user.chats.filter((chat) => chat.chat_room === roomId));
+    //getMessages();
     connectWebSocket();
+    //setMessages(user.chats.filter((chat) => chat.chat_room === roomId));
     console.log(user);
+    console.log(messages);
     return () => {
       if (ws.current) {
         ws.current.close();
@@ -104,93 +113,132 @@ const Chatroom = () => {
 
   return (
     <div className="chatroom">
-      <section className="messages">
-        <div className="message-head">
-          <h2>Chats</h2>
-        </div>
-        <div className="message-list">
-          {user.chat_rooms.map((room) => (
-            <ChatList
-              name={
-                user.customer.email === room.member1.email
-                  ? room.member2.name
-                  : room.member1.name
-              }
-              product={room.product.title}
-              image={
-                user.customer.email === room.member1.email
-                  ? room.member2.profile_image
-                  : room.member1.profile_image
-              }
-              message={
-                user.chats
-                  .filter((chat) => chat.chat_room === room.id)
-                  .splice(-1)[0]["content"]
-              }
-              date={
-                user.chats
-                  .filter((chat) => chat.chat_room === room.id)
-                  .splice(-1)[0]["timestamp"]
-              }
-            />
-          ))}
+      <section className={`${showChat ? "hide-chat" : "show-chat"}`}>
+        <div className="messages">
+          <div className="message-head">
+            <h2>Chats</h2>
+          </div>
+          <div className="message-list">
+            {user.chat_rooms.map((room) => (
+              <div
+                onClick={() => {
+                  setMessages(
+                    user.chats.filter((chat) => chat.chat_room === room.id),
+                  );
+                  setRoomId(room.id);
+                  console.log(room.id);
+                  setShowChat(true);
+                }}
+              >
+                <ChatList
+                  name={
+                    user.customer.email === room.member1.email
+                      ? room.member2.name
+                      : room.member1.name
+                  }
+                  product={room.product.title}
+                  image={
+                    user.customer.email === room.member1.email
+                      ? room.member2.profile_image
+                      : room.member1.profile_image
+                  }
+                  message={
+                    user.chats
+                      .filter((chat) => chat.chat_room === room.id)
+                      .splice(-1)[0]["content"]
+                  }
+                  date={
+                    user.chats
+                      .filter((chat) => chat.chat_room === room.id)
+                      .splice(-1)[0]["timestamp"]
+                  }
+                />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
-      <section className="chat-messages">
-        <div className="chat-messages-header">
-          <div className="chat-image">
-            <img
-              src="https://res.cloudinary.com/di040wc0d/image/upload/v1/newlevels/profile_images/photo_wcnzl4"
-              alt=""
-              srcset=""
-            />
-          </div>
-          <div className="chat-details">
-            <p>Mike Jackson</p>
-            <p className="chat-product">Apple Iphone 12 Pro Max</p>
-          </div>
-        </div>
-        <div className="chat-messages-box" style={{ overflowY: "auto" }}>
-          {messages.length > 0 ? (
-            messages.map((obj) =>
-              obj.sender === user.customer.email ? (
-                <div className="float-right">
-                  <div className="chat-sender">
-                    <p className="sender-message">{obj.content}</p>
-                    <p className="time">{obj.timestamp}</p>
-                  </div>
-                </div>
+      {chatState && roomId ? (
+        <section className={`${showChat ? "show-chat" : "hide-chat"}`}>
+          <div className="chat-messages">
+            <div className="chat-messages-header">
+              <i
+                class="fas fa-arrow-left"
+                onClick={() => setShowChat(false)}
+              ></i>
+              <div className="chat-image">
+                <img
+                  src={
+                    user.customer.email ===
+                    user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                      .member1.email
+                      ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                          .member2.profile_image
+                      : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                          .member1.profile_image
+                  }
+                  alt=""
+                  srcset=""
+                />
+              </div>
+              <div className="chat-details">
+                <p className="medium-size">
+                  {user.customer.email ===
+                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                    .member1.email
+                    ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .member2.name
+                    : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .member1.name}
+                </p>
+                <p className="chat-product medium-size">
+                  {user.customer.email ===
+                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                    .member1.email
+                    ? user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .product.title
+                    : user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .product.title}
+                </p>
+              </div>
+            </div>
+            <div className="chat-messages-box" style={{ overflowY: "auto" }}>
+              {messages.length > 0 ? (
+                messages.map((obj) =>
+                  obj.sender === user.customer.email ? (
+                    <div className="float-right">
+                      <div className="chat-sender">
+                        <p className="sender-message">{obj.content}</p>
+                        <p className="time">{DateFormat(obj.timestamp)}</p>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="chat-receiver">
+                      <p className="receiver-message">{obj.content}</p>
+                      <p className="time">{DateFormat(obj.timestamp)}</p>
+                    </div>
+                  ),
+                )
               ) : (
-                <div className="chat-receiver">
-                  <p className="receiver-message">{obj.content}</p>
-                  <p className="time">{obj.timestamp}</p>
-                </div>
-              ),
-            )
-          ) : (
-            <></>
-          )}
-          <div className="float-right">
-            <div className="chat-sender">
-              <p className="sender-message">
-                I would love to know how much this Iphone 15 cost
-              </p>
-              <p className="time">just now</p>
+                <></>
+              )}
+            </div>
+            <div className="message-input">
+              <textarea
+                name="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Type your message ..."
+              ></textarea>
+              <div className="chat-send-btn" onClick={sendMessage}>
+                <i class="fa fa-paper-plane"></i>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="message-input">
-          <textarea
-            name="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            placeholder="Type your message ..."
-          ></textarea>
-          <div className="chat-send-btn" onClick={sendMessage}>
-            <i class="fa fa-paper-plane"></i>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : (
+        <LargeLoading />
+      )}
     </div>
   );
 };

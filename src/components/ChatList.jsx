@@ -1,4 +1,5 @@
 import React from "react";
+import DayFormat from "./DayFormat";
 
 const ChatList = ({ image, name, date, message, product }) => {
   return (
@@ -9,7 +10,7 @@ const ChatList = ({ image, name, date, message, product }) => {
       <div className="chat-details">
         <div className="chat-header">
           <p>{name}</p>
-          <p>{date}</p>
+          <p>{DayFormat(date)}</p>
         </div>
         <p className="chat-product">{product}</p>
         <p className="chat-message">{message}</p>

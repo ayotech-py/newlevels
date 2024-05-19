@@ -26,7 +26,7 @@ const Header = () => {
               <i className="fas fa-ad"></i>
               <p>My Ads</p>
             </Link>
-            <Link to={"/"}>
+            <Link to={"/chat"}>
               <i class="fa-solid fa-comment-dots"></i>
               <p>Chats</p>
             </Link>
@@ -58,7 +58,7 @@ const Header = () => {
               <i className="fas fa-ad"></i>
               <p>My Ads</p>
             </Link>
-            <Link to={"/"}>
+            <Link to={"/chat"}>
               <i class="fa-solid fa-comment-dots"></i>
               <p>Chats</p>
             </Link>
