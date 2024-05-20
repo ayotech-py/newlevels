@@ -109,7 +109,7 @@ const Customer = ({ product }) => {
                 <span>|</span>
                 <div className="page-contact-list">
                   <i class="fas fa-phone"></i>
-                  <p>{customer.phone}</p>
+                  <p>0{customer.phone}</p>
                 </div>
               </div>
               {/* <div className="action-buttons">
