@@ -123,6 +123,12 @@ body {
   scrollbar-color: #888 #f1f1f1;
 }
 
+button:disabled {
+  background-color: #cccccc; /* Gray background */
+  color: #666666; /* Gray text */
+  cursor: not-allowed; /* Indicate the button is not clickable */
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

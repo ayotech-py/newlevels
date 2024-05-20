@@ -87,8 +87,15 @@
   padding: 10px;
   border-radius: 5px;
   border: none;
-  cursor: pointer;
   transition: 0.3s ease-in-out;
+}
+
+.product-page-actions button:disabled,
+.product-page-actions button:disabled:hover {
+  background-color: gray;
+  color: white;
+  cursor: not-allowed;
+  border: none;
 }
 
 .product-page-actions button:hover {

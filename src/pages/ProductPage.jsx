@@ -13,6 +13,7 @@ const ProductPage = ({ products }) => {
   const [loading, setLoading] = useState(false);
   const token = window.localStorage.getItem("accessToken");
   const username = window.localStorage.getItem("username");
+  const [btnDisable, setBtnDisable] = useState(true);
 
   const get_product = products.filter((product) => product.id === product_id);
   const get_similar_product = products.filter(
@@ -121,10 +122,13 @@ const ProductPage = ({ products }) => {
                   <input
                     type="text"
                     value={chat}
-                    onChange={(e) => setChat(e.target.value)}
+                    onChange={(e) => {
+                      setChat(e.target.value);
+                      setBtnDisable(e.target.value.length > 0 ? false : true);
+                    }}
                     placeholder="Write your message"
                   />
-                  <button onClick={sendChat}>
+                  <button onClick={sendChat} disabled={btnDisable}>
                     {loading ? <Loading /> : "Send Message"}
                   </button>
                 </div>

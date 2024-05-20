@@ -6,7 +6,7 @@ import LargeLoading from "../components/LargeLoading";
 import Pusher from "pusher-js";
 
 const Chatroom = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, logout } = useAuth();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [roomId, setRoomId] = useState(null);
@@ -31,14 +31,14 @@ const Chatroom = () => {
     });
     if (response.status === 200) {
       const data = await response.json();
-      /* console.log(data.userData); */
       updateUser(data.userData);
+    } else if (response.status === 400) {
+      alert("An error occured!");
+    } else {
+      logout();
+      window.location.href = "/auth/login";
     }
   };
-
-  useEffect(() => {
-    console.log("sending");
-  }, []);
 
   useEffect(() => {
     getData();
@@ -130,20 +130,20 @@ const Chatroom = () => {
 
       if (!response.ok) {
         throw new Error("Failed to send message");
+      } else if (response.status === 400) {
+        alert("An error occured!");
+      } else {
+        /* logout();
+        window.location.href = "/auth/login"; */
       }
 
-      setMessage(""); // Clear the input after sending
+      setMessage("");
     } catch (error) {
       console.error("Error sending message:", error);
     }
   };
 
   const handleRoomClick = (room) => {
-    /* const filteredChats = k_user.chats.filter(
-      (chat) => chat.chat_room === room.id,
-    ); */
-    console.log(user.chats);
-
     setMessages(user.chats.filter((chat) => chat.chat_room === room));
     setRoomId(room);
     setShowChat(true);
@@ -165,7 +165,11 @@ const Chatroom = () => {
                       ? room.member2.name
                       : room.member1.name
                   }
-                  product={room.product.title.substring(0, 35)}
+                  product={
+                    room.product
+                      ? room.product.title.substring(0, 35)
+                      : "New Message"
+                  }
                   image={
                     user.customer.email === room.member1.email
                       ? room.member2.profile_image
@@ -223,15 +227,18 @@ const Chatroom = () => {
                         .member1.name}
                 </p>
                 <p className="chat-product medium-size">
-                  {user.customer.email ===
-                  user.chat_rooms.filter((chat) => chat.id === roomId)[0]
-                    .member1.email
-                    ? user.chat_rooms
-                        .filter((chat) => chat.id === roomId)[0]
-                        .product.title.substring(0, 35)
-                    : user.chat_rooms
-                        .filter((chat) => chat.id === roomId)[0]
-                        .product.title.substring(0, 35)}
+                  {user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                    .product
+                    ? user.customer.email ===
+                      user.chat_rooms.filter((chat) => chat.id === roomId)[0]
+                        .member1.email
+                      ? user.chat_rooms
+                          .filter((chat) => chat.id === roomId)[0]
+                          .product.title.substring(0, 35)
+                      : user.chat_rooms
+                          .filter((chat) => chat.id === roomId)[0]
+                          .product.title.substring(0, 35)
+                    : "New Message"}
                 </p>
               </div>
             </div>

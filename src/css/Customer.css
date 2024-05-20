@@ -71,6 +71,17 @@
   border: 2px solid black;
 }
 
+.page-contact-list-flex {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.page-contact-list-flex span {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 @media screen and (max-width: 650px) {
   .customer-page {
     margin-left: 5%;
@@ -102,5 +113,9 @@
 
   .page-contact {
     text-align: center;
+  }
+
+  .page-contact-list-flex {
+    justify-content: center;
   }
 }

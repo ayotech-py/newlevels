@@ -4,7 +4,7 @@ import { useAuth } from "../components/AuthProvider";
 import compressImage from "../components/ImageCompressor";
 
 const Profile = () => {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, logout } = useAuth();
 
   const [formState, setFormState] = useState(false);
 
@@ -85,6 +85,7 @@ const Profile = () => {
       setMessage(response.message);
     } else {
       setMessage("Session Expired, please login again!");
+      logout();
       window.location.href = "/auth/login";
     }
     setTimeout(() => setMessage(""), 3000);
