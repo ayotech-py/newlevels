@@ -4,6 +4,7 @@ import { useAuth } from "../components/AuthProvider";
 import DateFormat from "../components/DateFormat";
 import LargeLoading from "../components/LargeLoading";
 import Pusher from "pusher-js";
+import NoContent from "../components/NoContent";
 
 const Chatroom = () => {
   const { user, updateUser, logout } = useAuth();
@@ -161,36 +162,45 @@ const Chatroom = () => {
             <h2>Chats</h2>
           </div>
           <div className="message-list">
-            {user.chat_rooms.map((room) => (
-              <div onClick={() => handleRoomClick(room.id)}>
-                <ChatList
-                  name={
-                    user.customer.email === room.member1.email
-                      ? room.member2.name
-                      : room.member1.name
-                  }
-                  product={
-                    room.product
-                      ? room.product.title.substring(0, 35)
-                      : "New Message"
-                  }
-                  image={
-                    user.customer.email === room.member1.email
-                      ? room.member2.profile_image
-                      : room.member1.profile_image
-                  }
-                  message={user.chats
-                    .filter((chat) => chat.chat_room === room.id)
-                    .splice(-1)[0]
-                    ["content"].substring(0, 35)}
-                  date={
-                    user.chats
+            {user.chat_rooms.length > 0 ? (
+              user.chat_rooms.map((room) => (
+                <div onClick={() => handleRoomClick(room.id)}>
+                  <ChatList
+                    name={
+                      user.customer.email === room.member1.email
+                        ? room.member2.name
+                        : room.member1.name
+                    }
+                    product={
+                      room.product
+                        ? room.product.title.substring(0, 35)
+                        : "New Message"
+                    }
+                    image={
+                      user.customer.email === room.member1.email
+                        ? room.member2.profile_image
+                        : room.member1.profile_image
+                    }
+                    message={user.chats
                       .filter((chat) => chat.chat_room === room.id)
-                      .splice(-1)[0]["timestamp"]
-                  }
-                />
-              </div>
-            ))}
+                      .splice(-1)[0]
+                      ["content"].substring(0, 35)}
+                    date={
+                      user.chats
+                        .filter((chat) => chat.chat_room === room.id)
+                        .splice(-1)[0]["timestamp"]
+                    }
+                  />
+                </div>
+              ))
+            ) : (
+              <NoContent
+                content={
+                  "No message yet!, Find a product and chat with the seller."
+                }
+                width={"100%"}
+              />
+            )}
           </div>
         </div>
       </section>

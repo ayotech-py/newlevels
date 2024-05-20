@@ -88,7 +88,28 @@ const ProductPage = ({ products }) => {
                 <div className="image-container">
                   <img src={get_product[0].customer.profile_image} alt="" />
                 </div>
-                <p className="large-size">{get_product[0].customer.name}</p>
+                <div style={{ maxWidth: "70%" }}>
+                  <p
+                    className="large-size"
+                    style={{
+                      lineHeight: "1.5",
+                      marginTop: "0px",
+                      marginBottom: "0px",
+                    }}
+                  >
+                    {get_product[0].customer.name}
+                  </p>
+                  <p
+                    className="small-size"
+                    style={{
+                      lineHeight: "1.5",
+                      marginTop: "0px",
+                      marginBottom: "0px",
+                    }}
+                  >
+                    See more from {get_product[0].customer.name}
+                  </p>
+                </div>
               </Link>
               <div className="product-url medium-size">
                 <p>

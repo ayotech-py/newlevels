@@ -3,6 +3,7 @@ import { useAuth } from "../components/AuthProvider";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
 import compressImage from "../components/ImageCompressor";
+import NoContent from "../components/NoContent";
 
 const Ads = () => {
   const [productImage, setProductImage] = useState(null);
@@ -376,87 +377,91 @@ const Ads = () => {
         </button>
       </section>
       <section className="product-list">
-        {user.product.map((product) => (
-          <div
-            className={`product-card ${product.featured ? "featured-card" : ""}`}
-          >
-            <div className="image">
-              <img src={product.image} alt="" srcset="" />
-              <div className="featured-container">
-                <p
-                  style={{
-                    display: product.featured ? "block" : "none",
-                    backgroundColor: "var(--yellow)",
-                  }}
-                >
-                  <i class="fas fa-star"></i>
-                  Featured
-                </p>
-                <p
-                  style={{
-                    display: "block",
-                    backgroundColor: "var(--gray)",
-                  }}
-                >
-                  <i
-                    class={
-                      product.approved
-                        ? "fas fa-check"
-                        : "fas fa-hourglass-half"
-                    }
-                  ></i>
-                  {product.approved ? "Approved" : "Pending"}
-                </p>
-              </div>
-            </div>
-            <div className="description">
-              <div className="seller-badge">
-                <img src={product.customer.profile_image} alt="" srcset="" />
-                <p className="medium-size">{product.customer.name}</p>
-              </div>
-              <h3 className="medium-size medium-size-h3">
-                {product.title.substring(0, 40)}
-              </h3>
-              <div className="location medium-size">
-                <i class="fa-solid fa-location-dot"></i>
-                <p>{product.customer.location}</p>
-              </div>
-              <div className="price-x-condition">
-                <h3 className="medium-size medium-size-h3">
-                  ₦
-                  {product.price
-                    .toString()
-                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
-                </h3>
-                <p className="condition">
-                  <i class="fas fa-info-circle"></i>
-                  {product.condition}
-                </p>
-              </div>
-              <div className="ads-action-btn">
-                <Link to={""}>
-                  <button
-                    className="medium-size"
-                    onClick={() => handleEdit(product.id)}
-                  >
-                    Edit
-                  </button>
-                </Link>
-                <Link to={""}>
-                  <button
-                    onClick={() => {
-                      setDeleteId(product.id);
-                      setConfirmState(true);
+        {user.product.length > 0 ? (
+          user.product.map((product) => (
+            <div
+              className={`product-card ${product.featured ? "featured-card" : ""}`}
+            >
+              <div className="image">
+                <img src={product.image} alt="" srcset="" />
+                <div className="featured-container">
+                  <p
+                    style={{
+                      display: product.featured ? "block" : "none",
+                      backgroundColor: "var(--yellow)",
                     }}
-                    className="medium-size"
                   >
-                    Delete
-                  </button>
-                </Link>
+                    <i class="fas fa-star"></i>
+                    Featured
+                  </p>
+                  <p
+                    style={{
+                      display: "block",
+                      backgroundColor: "var(--gray)",
+                    }}
+                  >
+                    <i
+                      class={
+                        product.approved
+                          ? "fas fa-check"
+                          : "fas fa-hourglass-half"
+                      }
+                    ></i>
+                    {product.approved ? "Approved" : "Pending Approval"}
+                  </p>
+                </div>
+              </div>
+              <div className="description">
+                <div className="seller-badge">
+                  <img src={product.customer.profile_image} alt="" srcset="" />
+                  <p className="medium-size">{product.customer.name}</p>
+                </div>
+                <h3 className="medium-size medium-size-h3">
+                  {product.title.substring(0, 40)}
+                </h3>
+                <div className="location medium-size">
+                  <i class="fa-solid fa-location-dot"></i>
+                  <p>{product.customer.location}</p>
+                </div>
+                <div className="price-x-condition">
+                  <h3 className="medium-size medium-size-h3">
+                    ₦
+                    {product.price
+                      .toString()
+                      .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                  </h3>
+                  <p className="condition">
+                    <i class="fas fa-info-circle"></i>
+                    {product.condition}
+                  </p>
+                </div>
+                <div className="ads-action-btn">
+                  <Link to={""}>
+                    <button
+                      className="medium-size"
+                      onClick={() => handleEdit(product.id)}
+                    >
+                      Edit
+                    </button>
+                  </Link>
+                  <Link to={""}>
+                    <button
+                      onClick={() => {
+                        setDeleteId(product.id);
+                        setConfirmState(true);
+                      }}
+                      className="medium-size"
+                    >
+                      Delete
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <NoContent content={"You've not added any product yet"} />
+        )}
       </section>
     </div>
   );

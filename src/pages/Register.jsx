@@ -9,6 +9,7 @@ const Register = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   function toTitleCase(str) {
     return str.toLowerCase().replace(/(?:^|\s|-)\w/g, function (match) {
@@ -97,18 +98,38 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <input
-            type="password"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            placeholder="Confirm Password"
-          />
+          <div className="input-password-container">
+            <input
+              type={showPassword ? `text` : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <i
+              class={
+                showPassword ? "fa fa-eye-slash r-icon" : "fa fa-eye r-icon"
+              }
+              onClick={() =>
+                showPassword ? setShowPassword(false) : setShowPassword(true)
+              }
+            ></i>
+          </div>
+          <div className="input-password-container">
+            <input
+              type={showPassword ? `text` : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+            />
+            <i
+              class={
+                showPassword ? "fa fa-eye-slash r-icon" : "fa fa-eye r-icon"
+              }
+              onClick={() =>
+                showPassword ? setShowPassword(false) : setShowPassword(true)
+              }
+            ></i>
+          </div>
         </div>
         <button onClick={handleSubmit}>
           {loading ? <Loading /> : "Register"}

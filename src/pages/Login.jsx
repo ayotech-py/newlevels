@@ -9,6 +9,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const { login } = useAuth();
   const navigate = useNavigate();
@@ -79,12 +80,22 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
           />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
+          <div className="input-password-container">
+            <input
+              type={showPassword ? `text` : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <i
+              class={
+                showPassword ? "fa fa-eye-slash r-icon" : "fa fa-eye r-icon"
+              }
+              onClick={() =>
+                showPassword ? setShowPassword(false) : setShowPassword(true)
+              }
+            ></i>
+          </div>
         </div>
         <button onClick={handleSubmit}>
           {loading ? <Loading /> : "Login"}
