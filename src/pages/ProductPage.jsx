@@ -120,7 +120,7 @@ const ProductPage = ({ products }) => {
                 <div className="product-page-actions">
                   <button
                     onClick={() =>
-                      (window.location.href = `tel:0${customer.phone}`)
+                      (window.location.href = `tel:0${get_product[0].customer.phone}`)
                     }
                   >
                     Contact Seller
