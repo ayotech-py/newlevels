@@ -109,7 +109,7 @@ const Customer = ({ product }) => {
                 <span>|</span>
                 <div className="page-contact-list">
                   <i class="fas fa-phone"></i>
-                  <p>0{customer.phone}</p>
+                  <p>{customer.phone}</p>
                 </div>
               </div>
               {/* <div className="action-buttons">
@@ -123,7 +123,7 @@ const Customer = ({ product }) => {
                 >
                   <button
                     onClick={() =>
-                      (window.location.href = `tel:0${customer.phone}`)
+                      (window.location.href = `tel:+234${customer.phone}`)
                     }
                   >
                     Contact Seller
