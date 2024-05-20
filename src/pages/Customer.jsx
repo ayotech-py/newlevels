@@ -123,7 +123,7 @@ const Customer = ({ product }) => {
                 >
                   <button
                     onClick={() =>
-                      (window.location.href = `tel:${customer.phone}`)
+                      (window.location.href = `tel:0${customer.phone}`)
                     }
                   >
                     Contact Seller

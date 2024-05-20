@@ -118,7 +118,13 @@ const ProductPage = ({ products }) => {
               </div>
               {get_product[0].customer.email !== username ? (
                 <div className="product-page-actions">
-                  <button>Contact Seller</button>
+                  <button
+                    onClick={() =>
+                      (window.location.href = `tel:0${customer.phone}`)
+                    }
+                  >
+                    Contact Seller
+                  </button>
                   <input
                     type="text"
                     value={chat}
