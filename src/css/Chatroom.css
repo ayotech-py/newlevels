@@ -97,7 +97,8 @@
 
 .chat-messages-box .chat-sender {
   margin-top: 10px;
-  max-width: 300px;
+  width: max-content;
+  max-width: 500px;
   background-color: var(--yellow);
   padding: 6px 8px 1px 8px;
   border-radius: 10px;
@@ -119,7 +120,8 @@
 
 .chat-messages-box .chat-receiver {
   margin-top: 10px;
-  max-width: max-content;
+  width: max-content;
+  max-width: 500px;
   background-color: var(--gray);
   padding: 6px 8px 1px 8px;
   border-radius: 10px;
@@ -197,7 +199,7 @@
     padding-left: 3%;
     padding-right: 3%;
     grid-template-columns: 100%;
-    padding-top: 20px;
+    padding-top: 40px;
     padding-bottom: 20px;
     margin-top: -20px;
   }
@@ -235,6 +237,14 @@
   .chat-details {
     width: 100%;
     margin-left: 10px;
+  }
+
+  .chat-messages-box .chat-receiver {
+    max-width: 300px;
+  }
+
+  .chat-messages-box .chat-sender {
+    max-width: 300px;
   }
 }
 
