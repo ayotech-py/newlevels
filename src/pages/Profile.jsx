@@ -26,7 +26,6 @@ const Profile = () => {
   const handleImageChange = (setImage) => async (event) => {
     let file = event.target.files[0];
     file = await compressImage(file);
-    console.log(file);
     if (file) {
       const reader = new FileReader();
 

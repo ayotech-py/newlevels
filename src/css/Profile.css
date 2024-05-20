@@ -1,5 +1,5 @@
 .profile-page {
-  margin-top: 100px;
+  margin-top: 150px;
   margin-left: 15%;
   margin-right: 15%;
   display: flex;
@@ -67,8 +67,9 @@
   border-bottom: 3px solid white;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 800px) {
   .profile-page {
+    margin-top: 100px;
     margin-left: 5%;
     margin-right: 5%;
     flex-direction: column;
@@ -81,5 +82,20 @@
 
   .profile-page .main-profile {
     width: 84%;
+  }
+}
+
+@media screen and (min-width: 801px) and (max-width: 1300px) {
+  .profile-page {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+
+  .profile-page .aside-profile {
+    width: 40%;
+  }
+
+  .profile-page .main-profile {
+    width: 50%;
   }
 }

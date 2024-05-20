@@ -113,7 +113,7 @@
 }
 
 .hidden-toggle {
-  right: -300px;
+  right: -500px;
   animation: slideOut 1s forwards;
 }
 
@@ -124,7 +124,7 @@
 
 @keyframes slideIn {
   from {
-    right: -300px;
+    right: -500px;
   }
   to {
     right: 0;
@@ -136,7 +136,7 @@
     right: 0;
   }
   to {
-    right: -300px;
+    right: -500px;
   }
 }
 
@@ -148,7 +148,7 @@
   animation: slideOut 1s forwards;
 }
 
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 950px) {
   .newlevels-header {
     padding-left: 5%;
     padding-right: 5%;
@@ -169,5 +169,19 @@
 
   .brand-name a img {
     width: 110px;
+  }
+}
+
+@media screen and (min-width: 951px) and (max-width: 1300px) {
+  .newlevels-header {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+}
+
+@media screen and (min-width: 1301px) and (max-width: 1600px) {
+  .newlevels-header {
+    padding-left: 10%;
+    padding-right: 10%;
   }
 }

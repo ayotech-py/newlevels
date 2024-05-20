@@ -231,4 +231,16 @@
   .chatroom .messages {
     height: 80vh;
   }
+
+  .chat-details {
+    width: 100%;
+    margin-left: 10px;
+  }
+}
+
+@media screen and (min-width: 651px) and (max-width: 1300px) {
+  .chatroom {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
 }

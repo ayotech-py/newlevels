@@ -71,3 +71,11 @@
     font-size: 0.7rem;
   }
 }
+
+@media screen and (min-width: 651px) and (max-width: 1300px) {
+  .auth-form {
+    margin-left: 15%;
+    margin-right: 15%;
+    width: 70%;
+  }
+}

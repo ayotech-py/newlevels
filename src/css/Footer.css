@@ -72,3 +72,22 @@
     line-height: 1.5;
   }
 }
+
+@media screen and (min-width: 650px) and (max-width: 1000px) {
+  .footer {
+    padding: 7% 5%;
+    text-align: center;
+  }
+
+  .footer-main {
+    display: grid;
+    grid-template-columns: 50% 50%;
+  }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1600px) {
+  .newlevels-header {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}

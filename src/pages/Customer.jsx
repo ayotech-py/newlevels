@@ -14,10 +14,9 @@ const Customer = ({ product }) => {
   const [loading, setLoading] = useState(false);
   const token = window.localStorage.getItem("accessToken");
   const username = window.localStorage.getItem("username");
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, logout } = useAuth();
   const [btnDisable, setBtnDisable] = useState(true);
 
-  console.log(customer_name);
   useEffect(() => {
     function formatUsername(username) {
       const words = username.split("%20");
@@ -30,17 +29,13 @@ const Customer = ({ product }) => {
     }
 
     function findCustomerAndProductsByName(customerName) {
-      // Find the customer profile
       const customerProfile = product.find(
         (item) => item.customer.name === customerName,
       )?.customer;
 
-      // Find all products associated with this customer
       const products = product.filter(
         (item) => item.customer.name === customerName,
       );
-
-      console.log(product);
 
       return {
         customerProfile,
@@ -64,6 +59,12 @@ const Customer = ({ product }) => {
       customer: customer.email,
     };
 
+    if (!token) {
+      alert("Please login to send message!");
+      setLoading(false);
+      return;
+    }
+
     const request = await fetch(url, {
       method: "POST",
       headers: {
@@ -75,13 +76,18 @@ const Customer = ({ product }) => {
     });
 
     const response = await request.json();
-    if (request.status === 200) {
+    if (request.ok) {
       const chat_data = response["chatData"];
       user.chat_rooms = chat_data["chat_rooms"];
       user.chats = chat_data["chats"];
       updateUser(user);
       setLoading(false);
       setChat("");
+    } else if (request.status === 403) {
+      alert("Session Expired!, please login again");
+      logout();
+      window.location.href = "/auth/login";
+      setLoading(false);
     } else {
       setLoading(false);
     }
@@ -97,10 +103,10 @@ const Customer = ({ product }) => {
             </div>
             <div className="page-contact">
               <h2>{customer.name}</h2>
-              {/* <div className="page-contact-list">
+              <div className="page-contact-list">
                 <i class="fas fa-envelope"></i>
                 <p>{customer.email}</p>
-              </div> */}
+              </div>
               <div className="page-contact-list-flex">
                 <div className="page-contact-list">
                   <i class="fas fa-map-marker-alt"></i>

@@ -43,8 +43,8 @@ const Chatroom = () => {
   useEffect(() => {
     getData();
     if (roomId) {
-      const pusher = new Pusher("5f083f9b2bd0c3f2b6df", {
-        cluster: "eu",
+      const pusher = new Pusher(`${process.env.REACT_APP_PUSHER_KEY}`, {
+        cluster: `${process.env.REACT_APP_PUSHER_CLUSTER}`,
         forceTLS: true,
       });
 
@@ -110,15 +110,18 @@ const Chatroom = () => {
   };
 
   const sendMessage = async () => {
-    const messageData = { message, sender: user.customer.email };
+    const token = window.localStorage.getItem("accessToken");
+    const username = window.localStorage.getItem("username");
 
     try {
       const response = await fetch(
-        `${process.env.REACT_APP_BASE_URL}/send_message`,
+        `${process.env.REACT_APP_BASE_URL}/send_message/`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
+            user: username,
           },
           body: JSON.stringify({
             room_id: roomId,
@@ -128,18 +131,19 @@ const Chatroom = () => {
         },
       );
 
-      if (!response.ok) {
-        throw new Error("Failed to send message");
+      if (response.ok) {
+        console.log("");
       } else if (response.status === 400) {
         alert("An error occured!");
-      } else {
-        /* logout();
-        window.location.href = "/auth/login"; */
+      } else if (response.status === 403) {
+        alert("Session Expired!, please login again");
+        logout();
+        window.location.href = "/auth/login";
       }
 
       setMessage("");
     } catch (error) {
-      console.error("Error sending message:", error);
+      alert("Error sending message:", error);
     }
   };
 
@@ -198,7 +202,6 @@ const Chatroom = () => {
                 class="fas fa-arrow-left"
                 onClick={() => {
                   setShowChat(false);
-                  console.log(user.chats);
                 }}
               ></i>
               <div className="chat-image">

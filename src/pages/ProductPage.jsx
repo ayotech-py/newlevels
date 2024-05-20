@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useAuth } from "../components/AuthProvider";
 import Loading from "../components/Loading";
+import LargeLoading from "../components/LargeLoading";
 
 const ProductPage = ({ products }) => {
   const { product_id } = useParams();
   const [chat, setChat] = useState("");
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, logout } = useAuth();
   const [loading, setLoading] = useState(false);
   const token = window.localStorage.getItem("accessToken");
   const username = window.localStorage.getItem("username");
@@ -30,6 +31,12 @@ const ProductPage = ({ products }) => {
       product_id: product_id,
     };
 
+    if (!token) {
+      alert("Please login to send message!");
+      setLoading(false);
+      return;
+    }
+
     const request = await fetch(url, {
       method: "POST",
       headers: {
@@ -41,13 +48,18 @@ const ProductPage = ({ products }) => {
     });
 
     const response = await request.json();
-    if (request.status === 200) {
+    if (request.ok) {
       const chat_data = response["chatData"];
       user.chat_rooms = chat_data["chat_rooms"];
       user.chats = chat_data["chats"];
       updateUser(user);
       setLoading(false);
       setChat("");
+    } else if (request.status === 403) {
+      alert("Session Expired!, please login again");
+      logout();
+      window.location.href = "/auth/login";
+      setLoading(false);
     } else {
       setLoading(false);
     }
@@ -150,7 +162,7 @@ const ProductPage = ({ products }) => {
           <SimilarProduct similarProduct={get_similar_product} />
         </div>
       ) : (
-        <>E didnt</>
+        <LargeLoading />
       )}
     </div>
   );
