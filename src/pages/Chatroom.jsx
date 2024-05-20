@@ -31,7 +31,7 @@ const Chatroom = () => {
     });
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data.userData);
+      /* console.log(data.userData); */
       updateUser(data.userData);
     }
   };
@@ -57,14 +57,8 @@ const Chatroom = () => {
         const updatedChats = user.chats
           .filter((chat) => chat.chat_room === roomId)
           .concat(data);
-
-        const updatedUser = {
-          ...user,
-          chats: user.chats.concat(data), // Ensure the new chat data is added to the user's chats
-        };
-
-        updateUser(updatedUser);
-
+        user.chats.push(data);
+        updateUser(user);
         setMessages(updatedChats);
       });
 
