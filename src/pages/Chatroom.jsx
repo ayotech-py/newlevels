@@ -43,72 +43,129 @@ const Chatroom = () => {
 
   useEffect(() => {
     getData();
-    if (roomId) {
-      const pusher = new Pusher(`${process.env.REACT_APP_PUSHER_KEY}`, {
-        cluster: `${process.env.REACT_APP_PUSHER_CLUSTER}`,
-        forceTLS: true,
-      });
+    // Initialize Pusher
+    const pusher = new Pusher(`${process.env.REACT_APP_PUSHER_KEY}`, {
+      cluster: `${process.env.REACT_APP_PUSHER_CLUSTER}`,
+      forceTLS: true,
+    });
 
-      pusherRef.current = pusher;
+    pusherRef.current = pusher;
 
-      const channel = pusher.subscribe(`chat_${roomId}`);
-      channelRef.current = channel;
+    const chatroomIds = user.chat_rooms.map((chat) => chat.id); // Extract chatroom IDs from user's chats
+
+    chatroomIds.forEach((chatId) => {
+      const channel = pusher.subscribe(`chat_${chatId}`);
 
       channel.bind("chat_message", (data) => {
         const updatedChats = user.chats
-          .filter((chat) => chat.chat_room === roomId)
+          .filter((chat) => chat.chat_room === chatId)
           .concat(data);
         user.chats.push(data);
+        const index = user.chat_rooms.findIndex((chat) => chat.id === chatId);
+        const itemToMove = user.chat_rooms[index];
+        user.chat_rooms.splice(index, 1);
+        user.chat_rooms.unshift(itemToMove);
         updateUser(user);
         setMessages(updatedChats);
       });
 
-      pusher.connection.bind("connected", () => {
-        setChatState(true);
-        console.log("Pusher connected");
-        reconnectAttemptsRef.current = 0; // Reset reconnect attempts on successful connection
+      channel.bind("pusher:subscription_succeeded", () => {
+        console.log(`Subscribed to chat_${chatId}`);
       });
 
-      pusher.connection.bind("disconnected", () => {
-        console.log("Pusher disconnected");
-        handleReconnect();
+      channel.bind("pusher:subscription_error", (status) => {
+        console.error(`Subscription error for chat_${chatId}:`, status);
       });
+    });
 
-      pusher.connection.bind("error", (err) => {
-        console.error("Pusher connection error:", err);
-        handleReconnect();
+    // Connection event bindings
+    pusher.connection.bind("connected", () => {
+      setChatState(true);
+      console.log("Pusher connected");
+      reconnectAttemptsRef.current = 0; // Reset reconnect attempts on successful connection
+    });
+
+    pusher.connection.bind("disconnected", () => {
+      console.log("Pusher disconnected");
+      handleReconnect();
+    });
+
+    pusher.connection.bind("error", (err) => {
+      console.error("Pusher connection error:", err);
+      handleReconnect();
+    });
+
+    // Cleanup on unmount
+    return () => {
+      chatroomIds.forEach((chatId) => {
+        const channel = pusher.channel(`chat_${chatId}`);
+        if (channel) {
+          channel.unbind_all();
+          channel.unsubscribe();
+        }
       });
+      pusher.disconnect();
+    };
+  }, []);
 
-      return () => {
-        channel.unbind_all();
-        channel.unsubscribe();
-        pusher.disconnect();
-      };
-    }
-  }, [roomId]);
+  /* const pusher = new Pusher(`${process.env.REACT_APP_PUSHER_KEY}`, {
+      cluster: `${process.env.REACT_APP_PUSHER_CLUSTER}`,
+      forceTLS: true,
+    });
+
+    pusherRef.current = pusher;
+
+    const channel = pusher.subscribe(`chat_${roomId}`);
+    channelRef.current = channel;
+
+    channel.bind("chat_message", (data) => {
+      const updatedChats = user.chats
+        .filter((chat) => chat.chat_room === roomId)
+        .concat(data);
+      user.chats.push(data);
+      updateUser(user);
+      setMessages(updatedChats);
+    });
+
+    pusher.connection.bind("connected", () => {
+      setChatState(true);
+      console.log("Pusher connected");
+      reconnectAttemptsRef.current = 0; // Reset reconnect attempts on successful connection
+    });
+
+    pusher.connection.bind("disconnected", () => {
+      console.log("Pusher disconnected");
+      handleReconnect();
+    });
+
+    pusher.connection.bind("error", (err) => {
+      console.error("Pusher connection error:", err);
+      handleReconnect();
+    });
+
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+      pusher.disconnect();
+    }; */
 
   const handleReconnect = () => {
+    const maxReconnectAttempts = 3;
     if (reconnectAttemptsRef.current < maxReconnectAttempts) {
-      const timeout = Math.min(
-        1000 * Math.pow(2, reconnectAttemptsRef.current),
-        30000,
-      ); // Exponential backoff with a max of 30 seconds
       reconnectAttemptsRef.current += 1;
-      console.log(`Reconnecting in ${timeout / 1000} seconds...`);
       setTimeout(() => {
-        console.log("Attempting to reconnect...");
-        reconnect();
-      }, timeout);
+        pusherRef.current.connect();
+      }, 1000 * reconnectAttemptsRef.current); // Exponential backoff
     } else {
-      console.log("Max reconnect attempts reached");
+      console.error("Max reconnect attempts reached");
     }
   };
 
-  const reconnect = () => {
+  /* const reconnect = () => {
     if (!pusherRef.current) return;
 
     pusherRef.current.connect();
-  };
+  }; */
 
   const sendMessage = async () => {
     const token = window.localStorage.getItem("accessToken");

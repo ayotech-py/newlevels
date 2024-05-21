@@ -3,7 +3,7 @@ import React from "react";
 const DateFormat = (isoString) => {
   const date = new Date(isoString);
 
-  let hours = date.getUTCHours();
+  let hours = date.getUTCHours() + 1;
   const minutes = date.getUTCMinutes();
 
   const ampm = hours >= 12 ? "pm" : "am";
