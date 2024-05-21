@@ -83,6 +83,7 @@ const Customer = ({ product }) => {
       updateUser(user);
       setLoading(false);
       setChat("");
+      setBtnDisable(true);
     } else if (request.status === 403) {
       alert("Session Expired!, please login again");
       logout();
@@ -90,6 +91,7 @@ const Customer = ({ product }) => {
       setLoading(false);
     } else {
       setLoading(false);
+      setBtnDisable(true);
     }
   };
 

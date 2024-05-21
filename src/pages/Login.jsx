@@ -58,6 +58,9 @@ const Login = () => {
     if (request.status === 200) {
       login(response.userData, response.tokens, response.username);
       navigate("/", { replace: true });
+    } else {
+      setShowPassword(false);
+      setLoading(false);
     }
   };
 

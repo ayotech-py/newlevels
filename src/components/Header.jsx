@@ -19,7 +19,9 @@ const Header = () => {
         <div>
           <div className="nav-list large-screen-nav">
             <div className="db-profile">
-              <img src={user.customer.profile_image} alt="" srcset="" />
+              <div className="header-image">
+                <img src={user.customer.profile_image} alt="" srcset="" />
+              </div>
               <h4>Welcome back, {user.customer.name}!</h4>
             </div>
             <Link to={"/ads"}>
@@ -47,7 +49,9 @@ const Header = () => {
           >
             <div className="mobile-top-close">
               <div className="db-profile">
-                <img src={user.customer.profile_image} alt="" srcset="" />
+                <div className="header-image">
+                  <img src={user.customer.profile_image} alt="" srcset="" />
+                </div>
                 <h4>Welcome back, {user.customer.name}!</h4>
               </div>
               <div className="close-btn" onClick={() => setMobileNav(false)}>

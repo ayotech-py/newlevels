@@ -55,13 +55,16 @@ const ProductPage = ({ products }) => {
       updateUser(user);
       setLoading(false);
       setChat("");
+      setBtnDisable(true);
     } else if (request.status === 403) {
       alert("Session Expired!, please login again");
       logout();
       window.location.href = "/auth/login";
       setLoading(false);
+      setBtnDisable(true);
     } else {
       setLoading(false);
+      setBtnDisable(true);
     }
   };
 
