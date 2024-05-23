@@ -110,6 +110,14 @@ const Ads = () => {
       }
     }
 
+    if (
+      user.customer.phone.length === 0 &&
+      user.customer.location.length === 0
+    ) {
+      setMessage("Please update your profile first.");
+      return null;
+    }
+
     const url = `${process.env.REACT_APP_BASE_URL}/products/`;
 
     const request = await fetch(url, {

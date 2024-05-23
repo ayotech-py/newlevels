@@ -43,24 +43,30 @@ const Login = () => {
 
     const url = `${process.env.REACT_APP_BASE_URL}/auth-login/`;
 
-    const request = await fetch(url, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ApiAuthorization: process.env.REACT_APP_API_KEY,
-      },
-      body: JSON.stringify(body),
-    });
+    try {
+      const request = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ApiAuthorization: process.env.REACT_APP_API_KEY,
+        },
+        body: JSON.stringify(body),
+      });
 
-    const response = await request.json();
-    setMessage(response.message);
-    setLoading(false);
-    if (request.status === 200) {
-      login(response.userData, response.tokens, response.username);
-      navigate("/", { replace: true });
-    } else {
-      setShowPassword(false);
+      const response = await request.json();
+      setMessage(response.message);
       setLoading(false);
+      if (request.status === 200) {
+        console.log(response.userData);
+        login(response.userData, response.tokens, response.username);
+        navigate("/", { replace: true });
+      } else {
+        setShowPassword(false);
+        setLoading(false);
+      }
+    } catch (error) {
+      setLoading(false);
+      setMessage("An error occured");
     }
   };
 
