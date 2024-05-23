@@ -160,7 +160,7 @@ const ProductPage = ({ products }) => {
                 <div className="product-page-actions">
                   <button
                     onClick={() =>
-                      (window.location.href = `tel:+234${get_product[0].customer.phone}`)
+                      (window.location.href = `tel:+234${get_product[0].customer.phone.substring(1, 11)}`)
                     }
                   >
                     Contact Seller

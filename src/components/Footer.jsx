@@ -12,8 +12,8 @@ const Footer = () => {
         <div className="footer-description">
           <img src={logo} alt="" />
           <p>
-            Experience the convenience of online shopping with our reliable and
-            efficient delivery services.
+            Your go-to Campus Marketplace! Unrivaled convenience for buying,
+            selling, and connecting within your university community.
           </p>
           <div class="social-icons">
             <Link

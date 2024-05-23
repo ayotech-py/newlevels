@@ -57,7 +57,6 @@ const Login = () => {
       setMessage(response.message);
       setLoading(false);
       if (request.status === 200) {
-        console.log(response.userData);
         login(response.userData, response.tokens, response.username);
         navigate("/", { replace: true });
       } else {

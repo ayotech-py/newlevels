@@ -135,7 +135,7 @@ const Customer = ({ product }) => {
                 >
                   <button
                     onClick={() =>
-                      (window.location.href = `tel:+234${customer.phone}`)
+                      (window.location.href = `tel:+234${customer.phone.substring(1, 11)}`)
                     }
                   >
                     Contact Seller

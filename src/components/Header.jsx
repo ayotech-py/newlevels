@@ -58,15 +58,15 @@ const Header = () => {
                 <i class="fa fa-xmark"></i>
               </div>
             </div>
-            <Link to={"/ads"}>
+            <Link to={"/ads"} onClick={() => setMobileNav(false)}>
               <i className="fas fa-ad"></i>
               <p>My Ads</p>
             </Link>
-            <Link to={"/chat"}>
+            <Link to={"/chat"} onClick={() => setMobileNav(false)}>
               <i class="fa-solid fa-comment-dots"></i>
               <p>Chats</p>
             </Link>
-            <Link to={"/profile"}>
+            <Link to={"/profile"} onClick={() => setMobileNav(false)}>
               <i class="fa-regular fa-user"></i>
               <p>Profile</p>
             </Link>
