@@ -4,14 +4,11 @@ import Loading from "../components/Loading";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/AuthProvider";
 
-const Login = () => {
+const ForgottenPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
-  const { login } = useAuth();
   const navigate = useNavigate();
 
   function toTitleCase(str) {
@@ -28,7 +25,6 @@ const Login = () => {
 
     const body = {
       email: email,
-      password: password,
     };
 
     for (const key in body) {
@@ -41,7 +37,7 @@ const Login = () => {
       }
     }
 
-    const url = `${process.env.REACT_APP_BASE_URL}/auth-login/`;
+    const url = `${process.env.REACT_APP_BASE_URL}/password_reset/`;
 
     const request = await fetch(url, {
       method: "POST",
@@ -51,15 +47,13 @@ const Login = () => {
       },
       body: JSON.stringify(body),
     });
+    setLoading(false);
 
     const response = await request.json();
     setMessage(response.message);
-    setLoading(false);
     if (request.status === 200) {
-      login(response.userData, response.tokens, response.username);
-      navigate("/", { replace: true });
     } else {
-      setShowPassword(false);
+      setMessage("An error occurred, please try again later.");
       setLoading(false);
     }
   };
@@ -68,7 +62,7 @@ const Login = () => {
     <div className="form-card">
       <div className="auth-form">
         <div className="form-title">
-          <h2>Login to your account</h2>
+          <h2>Forgotten Password</h2>
         </div>
         <div
           className="response-message"
@@ -83,33 +77,13 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Email Address"
           />
-          <div className="input-password-container">
-            <input
-              type={showPassword ? `text` : "password"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Password"
-            />
-            <i
-              class={
-                showPassword ? "fa fa-eye-slash r-icon" : "fa fa-eye r-icon"
-              }
-              onClick={() =>
-                showPassword ? setShowPassword(false) : setShowPassword(true)
-              }
-            ></i>
-          </div>
         </div>
         <button onClick={handleSubmit}>
-          {loading ? <Loading /> : "Login"}
+          {loading ? <Loading /> : "Reset Password"}
         </button>
-        <div className="form-actions">
-          <Link to={"/auth/register"}>Don't have an account? Register</Link>
-          <Link to={"/auth/forgot-password"}>Forgotten Password?</Link>
-        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ForgottenPassword;

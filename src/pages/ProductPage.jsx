@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SimilarProduct from "../components/SimilarProducts";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
@@ -8,6 +8,10 @@ import Loading from "../components/Loading";
 import LargeLoading from "../components/LargeLoading";
 
 const ProductPage = ({ products }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const { product_id } = useParams();
   const [chat, setChat] = useState("");
   const { user, updateUser, logout } = useAuth();

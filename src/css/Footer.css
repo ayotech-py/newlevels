@@ -4,6 +4,17 @@
   color: white;
 }
 
+.footer a {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.footer a:hover {
+  color: var(--yellow);
+}
+
 .footer h3 {
   color: #fff987;
 }
@@ -14,7 +25,7 @@
 
 .footer-main {
   display: grid;
-  grid-template-columns: 30% 20% 20% 20%;
+  grid-template-columns: 40% 25% 25%;
   justify-content: space-between;
 }
 
@@ -53,6 +64,16 @@
   font-weight: bold;
 }
 
+.footer .social-icons {
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer .social-icons i {
+  font-size: 20px;
+}
+
 @media screen and (max-width: 650px) {
   .footer {
     padding: 7% 5%;
@@ -71,17 +92,33 @@
   .footer .footer-description p {
     line-height: 1.5;
   }
+
+  .footer-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .footer .social-icons {
+    margin-bottom: 30px;
+  }
 }
 
 @media screen and (min-width: 650px) and (max-width: 1000px) {
   .footer {
     padding: 7% 5%;
-    text-align: center;
   }
 
-  .footer-main {
-    display: grid;
-    grid-template-columns: 50% 50%;
+  .footer-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .footer .social-icons {
+    width: 60%;
+    margin-bottom: 30px;
   }
 }
 
@@ -89,5 +126,16 @@
   .newlevels-header {
     padding-left: 10%;
     padding-right: 10%;
+  }
+
+  .footer-description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .footer .social-icons {
+    width: 50%;
+    margin-bottom: 30px;
   }
 }

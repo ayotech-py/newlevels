@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAuth } from "../components/AuthProvider";
 import Loading from "../components/Loading";
 import { Link } from "react-router-dom";
@@ -6,6 +6,10 @@ import compressImage from "../components/ImageCompressor";
 import NoContent from "../components/NoContent";
 
 const Ads = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const [productImage, setProductImage] = useState(null);
   const [formState, setFormState] = useState(false);
   const [confirmState, setConfirmState] = useState(false);
@@ -41,6 +45,8 @@ const Ads = () => {
   };
 
   const handleDelete = async (product_id) => {
+    setLoading(true);
+
     const token = window.localStorage.getItem("accessToken");
     const username = window.localStorage.getItem("username");
 
@@ -54,6 +60,7 @@ const Ads = () => {
         user: username,
       },
     });
+    setLoading(false);
 
     if (request.ok) {
       let indexToDelete = user.product.findIndex(
@@ -68,9 +75,11 @@ const Ads = () => {
       } else {
         alert("Object with the specified ID not found.");
       }
-    } else {
+    } else if (request.status === 403) {
       alert("Session Expired, please login again!");
       window.location.href = "/auth/login";
+    } else {
+      alert("An error occured, please try again!");
     }
   };
 

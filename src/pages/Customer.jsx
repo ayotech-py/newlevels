@@ -7,6 +7,10 @@ import Loading from "../components/Loading";
 import { useAuth } from "../components/AuthProvider";
 
 const Customer = ({ product }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const [customer, setCustomer] = useState(null);
   const [customerProduct, setCustomerProduct] = useState(null);
   const { customer_name } = useParams();

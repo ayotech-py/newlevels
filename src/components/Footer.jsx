@@ -1,7 +1,11 @@
 import React from "react";
 import logo from "../images/logo.jpeg";
+import { useAuth } from "./AuthProvider";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
+  const { user } = useAuth();
+
   return (
     <div className="footer">
       <div className="footer-main">
@@ -11,34 +15,69 @@ const Footer = () => {
             Experience the convenience of online shopping with our reliable and
             efficient delivery services.
           </p>
-        </div>
-        <div className="footer-categories">
-          <h3>CATEGORIES</h3>
-          <ul>
-            <li>Bags</li>
-            <li>Jobs</li>
-            <li>Electronics</li>
-            <li>Beauty</li>
-          </ul>
+          <div class="social-icons">
+            <Link
+              href="https://www.instagram.com/newlevels.co"
+              target="_blank"
+              aria-label="Instagram"
+              rel="noreferrer"
+            >
+              <i class="fab fa-instagram"></i>
+            </Link>
+            <Link
+              href="https://www.twitter.com/Newlevelsscotty"
+              target="_blank"
+              aria-label="Twitter"
+              rel="noreferrer"
+            >
+              <i class="fab fa-twitter"></i>
+            </Link>
+            <Link
+              href="https://www.facebook.com/profile.php?id=100092301401013"
+              target="_blank"
+              aria-label="Facebook"
+              rel="noreferrer"
+            >
+              <i class="fab fa-facebook"></i>
+            </Link>
+          </div>
         </div>
         <div className="footer-useful-links">
           <h3>USEFUL LINKS</h3>
           <ul>
-            <li>Sell on Newlevels</li>
-            <li>Contact Us</li>
-            <li>Help</li>
+            <li>
+              <Link to={user ? "/ads" : "/auth/login"}>Sell on Newlevels</Link>
+            </li>
+            <li>
+              <Link
+                to={
+                  "https://api.whatsapp.com/send?phone=2348117245997&text=Hello"
+                }
+              >
+                Contact us on Whatsapp
+              </Link>
+            </li>
+            <li>
+              <Link
+                to={
+                  "https://api.whatsapp.com/send?phone=2348117245997&text=Hello"
+                }
+              >
+                Help
+              </Link>
+            </li>
           </ul>
         </div>
         <div className="footer-contact-us">
           <h3>CONTACT US</h3>
-          <div className="contact-link">
+          <Link to={"mailto:contact@newlevels.com"} className="contact-link">
             <i class="fa-solid fa-envelope"></i>
-            <p>contact@newlevels.com</p>
-          </div>
-          <div className="contact-link">
+            <p>newlevelsscotty@gmail.com</p>
+          </Link>
+          <Link to={"tel:+2348117246049"} className="contact-link">
             <i class="fa-solid fa-phone"></i>
-            <p>+234 903 124 2345</p>
-          </div>
+            <p>+234 811 724 6049</p>
+          </Link>
         </div>
       </div>
       <div className="rights">

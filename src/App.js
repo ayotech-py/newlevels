@@ -21,10 +21,12 @@ import Ads from "./pages/Ads";
 import Profile from "./pages/Profile";
 import Customer from "./pages/Customer";
 import Chatroom from "./pages/Chatroom";
+import ForgottenPassword from "./pages/ForgottenPassword";
 
 import { AuthProvider } from "./components/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./components/NotFound";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -67,6 +69,12 @@ const App = () => {
           <Route path="/chat" element={<Layout children={<Chatroom />} />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="/auth/login" element={<Login />} />
+          <Route path="/auth/forgot-password" element={<ForgottenPassword />} />
+          <Route
+            path="/auth/reset-password/:uid/:token"
+            element={<ResetPassword />}
+          />
+
           <Route
             path="/customer/:customer_name"
             element={

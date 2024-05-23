@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Loading from "../components/Loading";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../components/AuthProvider";
+import { useParams } from "react-router-dom";
 
-const Login = () => {
-  const [email, setEmail] = useState("");
+const ResetPassword = () => {
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-
-  const { login } = useAuth();
-  const navigate = useNavigate();
+  const { uid, token } = useParams();
 
   function toTitleCase(str) {
     return str.toLowerCase().replace(/(?:^|\s|-)\w/g, function (match) {
@@ -23,11 +20,12 @@ const Login = () => {
   const handleSubmit = async () => {
     setLoading(true);
 
+    const url = `${process.env.REACT_APP_BASE_URL}/password_reset_confirm/${uid}/${token}/`;
+
     const isNullOrEmpty = (value) =>
       value === null || value === undefined || value === "";
 
     const body = {
-      email: email,
       password: password,
     };
 
@@ -41,7 +39,15 @@ const Login = () => {
       }
     }
 
-    const url = `${process.env.REACT_APP_BASE_URL}/auth-login/`;
+    if (password !== confirmPassword) {
+      setMessage("Password doesn't match");
+      setLoading(false);
+      return null;
+    } else if (password.length < 8) {
+      setMessage("Password must be greater than 8 characters");
+      setLoading(false);
+      return null;
+    }
 
     const request = await fetch(url, {
       method: "POST",
@@ -56,11 +62,15 @@ const Login = () => {
     setMessage(response.message);
     setLoading(false);
     if (request.status === 200) {
-      login(response.userData, response.tokens, response.username);
-      navigate("/", { replace: true });
+      setTimeout(() => {
+        window.location.href = "/auth/login";
+      }, 3000);
     } else {
-      setShowPassword(false);
-      setLoading(false);
+      try {
+        setMessage(response.message);
+      } catch (erro) {
+        setMessage("An error occurred, please try again later.");
+      }
     }
   };
 
@@ -68,7 +78,7 @@ const Login = () => {
     <div className="form-card">
       <div className="auth-form">
         <div className="form-title">
-          <h2>Login to your account</h2>
+          <h2>Reset Password</h2>
         </div>
         <div
           className="response-message"
@@ -77,12 +87,6 @@ const Login = () => {
           <p className="medium-size">{message}</p>
         </div>
         <div className="input-fields">
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email Address"
-          />
           <div className="input-password-container">
             <input
               type={showPassword ? `text` : "password"}
@@ -99,17 +103,29 @@ const Login = () => {
               }
             ></i>
           </div>
+          <div className="input-password-container">
+            <input
+              type={showPassword ? `text` : "password"}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              placeholder="Confirm Password"
+            />
+            <i
+              class={
+                showPassword ? "fa fa-eye-slash r-icon" : "fa fa-eye r-icon"
+              }
+              onClick={() =>
+                showPassword ? setShowPassword(false) : setShowPassword(true)
+              }
+            ></i>
+          </div>
         </div>
         <button onClick={handleSubmit}>
-          {loading ? <Loading /> : "Login"}
+          {loading ? <Loading /> : "Reset Password"}
         </button>
-        <div className="form-actions">
-          <Link to={"/auth/register"}>Don't have an account? Register</Link>
-          <Link to={"/auth/forgot-password"}>Forgotten Password?</Link>
-        </div>
       </div>
     </div>
   );
 };
 
-export default Login;
+export default ResetPassword;

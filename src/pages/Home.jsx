@@ -1,10 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ProductCard from "../components/ProductCard";
 import LargeLoading from "../components/LargeLoading";
 import ProductNotFound from "../components/ProductNotFound";
 import { useAuth } from "../components/AuthProvider";
 
 const Home = ({ products }) => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [search, setSearch] = useState("");
   const { user } = useAuth();

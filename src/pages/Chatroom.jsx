@@ -7,6 +7,10 @@ import Pusher from "pusher-js";
 import NoContent from "../components/NoContent";
 
 const Chatroom = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const { user, updateUser, logout } = useAuth();
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);

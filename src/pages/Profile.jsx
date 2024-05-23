@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Loading from "../components/Loading";
 import { useAuth } from "../components/AuthProvider";
 import compressImage from "../components/ImageCompressor";
 
 const Profile = () => {
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
+
   const { user, updateUser, logout } = useAuth();
 
   const [formState, setFormState] = useState(false);
