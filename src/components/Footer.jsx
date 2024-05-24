@@ -17,7 +17,7 @@ const Footer = () => {
           </p>
           <div class="social-icons">
             <Link
-              to="https://www.instagram.com/newlevels.co"
+              to="https://www.instagram.com/newlevels"
               target="_blank"
               aria-label="Instagram"
               rel="noreferrer"

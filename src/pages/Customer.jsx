@@ -121,7 +121,11 @@ const Customer = ({ product }) => {
                 <span>|</span>
                 <div className="page-contact-list">
                   <i class="fas fa-phone"></i>
-                  <p>{customer.phone}</p>
+                  <p>
+                    {customer.phone.length >= 11
+                      ? customer.phone
+                      : "0" + customer.phone}
+                  </p>
                 </div>
               </div>
               {/* <div className="action-buttons">
@@ -135,7 +139,7 @@ const Customer = ({ product }) => {
                 >
                   <button
                     onClick={() =>
-                      (window.location.href = `tel:+234${customer.phone.substring(1, 11)}`)
+                      (window.location.href = `tel:${customer.phone.length >= 11 ? customer.phone : "+234" + customer.phone}`)
                     }
                   >
                     Contact Seller
