@@ -35,7 +35,10 @@ const ProductCard = ({ product }) => {
             {product.condition}
           </p>
         </div>
-        <Link to={`/product/${product.id}`}>
+        <Link
+          to={`/product/${product.id}`}
+          onClick={window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
           <button className="medium-size">Details</button>
         </Link>
       </div>
