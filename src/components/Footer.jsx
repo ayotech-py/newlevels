@@ -17,7 +17,7 @@ const Footer = () => {
           </p>
           <div class="social-icons">
             <Link
-              href="https://www.instagram.com/newlevels.co"
+              to="https://www.instagram.com/newlevels.co"
               target="_blank"
               aria-label="Instagram"
               rel="noreferrer"
@@ -25,7 +25,7 @@ const Footer = () => {
               <i class="fab fa-instagram"></i>
             </Link>
             <Link
-              href="https://www.twitter.com/Newlevelsscotty"
+              to="https://www.twitter.com/Newlevelsscotty"
               target="_blank"
               aria-label="Twitter"
               rel="noreferrer"
@@ -33,7 +33,7 @@ const Footer = () => {
               <i class="fab fa-twitter"></i>
             </Link>
             <Link
-              href="https://www.facebook.com/profile.php?id=100092301401013"
+              to="https://www.facebook.com/profile.php?id=100092301401013"
               target="_blank"
               aria-label="Facebook"
               rel="noreferrer"
